@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Slack
 {
@@ -31,7 +32,7 @@ namespace Slack
                     "https://slack.com/api/chat.delete?token=" + _client.APIKey +
                     "&channel=" + System.Web.HttpUtility.UrlEncode(channel) +
                     "&ts=" + System.Web.HttpUtility.UrlEncode(ts.ToString()));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -93,7 +94,7 @@ namespace Slack
             try
             {
                 String strResponse = _client.APIRequest(strURL);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -141,7 +142,7 @@ namespace Slack
             try
             {
                 String strResponse = _client.APIRequest(strURL);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {

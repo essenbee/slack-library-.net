@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Slack.Messages;
 
 namespace Slack
 {
@@ -32,9 +33,10 @@ namespace Slack
             _channel = Data.channel;
             _event_ts = Data.event_ts;
             _hidden = Data.hidden;
+
             if (Utility.HasProperty(Data, "message"))
-            { 
-                _message = new Messages.Message(Data.message);
+            {
+                    _message = new Message(Data);
             }
             _previous_message = new Previous_Message(Data.previous_message);
             _subtype = Data.subtype;

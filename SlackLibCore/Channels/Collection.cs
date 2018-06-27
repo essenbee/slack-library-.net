@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 
 namespace Slack.Channels
@@ -29,7 +30,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.list?token=" + _client.APIKey);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -47,7 +48,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.archive?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(name));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -65,7 +66,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.create?token=" + _client.APIKey + "&name=" + System.Web.HttpUtility.UrlEncode(name));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -91,7 +92,7 @@ namespace Slack.Channels
                     "&count=" + args.count +
                     "&unreads=" + ((args.unreads) ? 1 : 0);
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.history?" + strGet);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -109,7 +110,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.info?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(id));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -127,7 +128,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.invite?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&user=" + System.Web.HttpUtility.UrlEncode(userID));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -145,7 +146,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.kick?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&user=" + System.Web.HttpUtility.UrlEncode(userID));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -163,7 +164,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.leave?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -181,7 +182,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.join?token=" + _client.APIKey + "&name=" + System.Web.HttpUtility.UrlEncode(name));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -199,7 +200,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.mark?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&ts=" + System.Web.HttpUtility.UrlEncode(ts.ToString()));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -217,7 +218,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.rename?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&name=" + System.Web.HttpUtility.UrlEncode(newName));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -235,7 +236,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.setPurpose?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&purpose=" + System.Web.HttpUtility.UrlEncode(newPurpose));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -253,7 +254,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.setTopic?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(channelID) + "&topic=" + System.Web.HttpUtility.UrlEncode(newTopic));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -271,7 +272,7 @@ namespace Slack.Channels
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/channels.unarchive?token=" + _client.APIKey + "&channel=" + System.Web.HttpUtility.UrlEncode(id));
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {

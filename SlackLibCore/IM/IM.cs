@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Slack
 {
@@ -31,7 +32,7 @@ namespace Slack
                     "https://slack.com/api/im.open?token=" + _client.APIKey +
                     "&user=" + System.Web.HttpUtility.UrlEncode(strUserID);
                 String strResponse = _client.APIRequest(strURL);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -49,7 +50,7 @@ namespace Slack
             try
             {
                 String strResponse = _client.APIRequest("https://slack.com/api/im.list?token=" + _client.APIKey);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
@@ -70,7 +71,7 @@ namespace Slack
                     "https://slack.com/api/im.close?token=" + _client.APIKey +
                     "&channel=" + System.Web.HttpUtility.UrlEncode(channel);
                 String strResponse = _client.APIRequest(strURL);
-                Response = System.Web.Helpers.Json.Decode(strResponse);
+                Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
             {
