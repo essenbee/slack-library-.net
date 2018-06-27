@@ -1,44 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace Slack
 {
     public partial class RTM
     {
-
-
         public class MetaData
         {
-
-
             public List<bot> bots;
-
             public Slack.TimeStamp cache_ts;
             public string cache_ts_version;
             public String cache_version;
-
             public List<channel> channels;
-
             public dnd dnd;
-
             public List<dynamic> groups;
-
             public List<ims> ims;
-
             public Slack.TimeStamp latest_event_ts;
             public Boolean ok;
-
             public self self;
-
             public team team;
-
             public String url;
-
             public List<user> users;
-
 
             public MetaData(dynamic Message)
             {
@@ -65,7 +48,17 @@ namespace Slack
                     foreach (dynamic channel in Message.channels)
                     {
                         rtmChannel = new RTM.channel(this);
-                        rtmChannel.created = new Slack.TimeStamp(channel.created);
+                        var ts = channel.created;
+
+                        try
+                        {
+                            rtmChannel.created = new Slack.TimeStamp(ts);
+                        }
+                        catch (RuntimeBinderException rtbex)
+                        {
+                            rtmChannel.created = new TimeStamp(DateTime.Today);
+                        }
+
                         rtmChannel.creator = channel.creator;
                         rtmChannel.has_pins = channel.has_pins;
                         rtmChannel.id = channel.id;
@@ -105,7 +98,7 @@ namespace Slack
                         this.ims.Add(rtmIMS);
                     }
                 }
-                this.latest_event_ts = new Slack.TimeStamp( Utility.TryGetProperty(Message, "latest_event_ts", "0"));
+                this.latest_event_ts = new Slack.TimeStamp(Utility.TryGetProperty(Message, "latest_event_ts", "0"));
                 this.ok = Utility.TryGetProperty(Message, "ok", false);
                 this.self = new RTM.self();
                 if (Utility.HasProperty(Message, "self"))
@@ -165,11 +158,6 @@ namespace Slack
                     }
                 }
             }
-
-
         }
-
-
     }
-
 }
