@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.Net.WebSockets;
+using System.Dynamic;
+using Newtonsoft.Json;
 
 namespace Slack
 {
@@ -10,15 +14,10 @@ namespace Slack
         #region Declerations
 
         public string APIKey { get; }
-
         public RTM.MetaData MetaData { get; private set; }
-
         public Channels.Collection Channels { get; }
-
         public Chat Chat { get; }
-
         public DND DND { get; }
-
         public IM IM { get; }
 
         #region Delegates
@@ -27,6 +26,8 @@ namespace Slack
         public delegate void ServiceConnectedEventHandler();
         public delegate void ServiceConnectionFailedEventHandler();
         public delegate void ServiceDisconnectedEventHandler();
+
+        public delegate void PongReceievdEventHandler();
 
         public delegate void DataReceivedEventHandler(String data);
         public delegate void HelloEventHandler(HelloEventArgs e);
@@ -101,17 +102,18 @@ namespace Slack
 
         #endregion
 
-
         private const string URL_RTM_START = "https://slack.com/api/rtm.start";
 
-        private System.Net.WebSockets.ClientWebSocket webSocket;
-        private System.Threading.Thread clientThread = null;
+        private ClientWebSocket webSocket;
+        private Thread clientThread = null;
         
         #region Public Events
         
         public event ServiceConnectedEventHandler ServiceConnected = null;
         public event ServiceConnectionFailedEventHandler ServiceConnectionFailed = null;
         public event ServiceDisconnectedEventHandler ServiceDisconnected = null;
+
+        public event PongReceievdEventHandler PongReceived = null;
 
         public event DataReceivedEventHandler DataReceived = null;
         public event HelloEventHandler Hello = null;
@@ -195,14 +197,12 @@ namespace Slack
             DND = new DND(this);
             IM = new IM(this);
         }
-
-
+        
         public void Dispose()
         {
             Disconnect();
         }
-
-
+        
         public void RefreshUsers()
         {
             try
@@ -214,8 +214,7 @@ namespace Slack
                 throw new Exceptions.UnknownErrorException();
             }
         }
-
-
+        
         private void _refreshRTMMetaData()
         {
             try
@@ -230,8 +229,7 @@ namespace Slack
                 throw new Exceptions.ServiceDisconnectedException(ex);
             }
         }
-
-
+        
         private string _downloadConnectionInfo()
         {
             try
@@ -259,7 +257,7 @@ namespace Slack
             {
                 clientThread?.Abort();
             }
-            catch (System.Threading.ThreadAbortException)
+            catch (ThreadAbortException)
             {
                 //this is fine, client could be shut down
             }
@@ -284,8 +282,8 @@ namespace Slack
             }
             try
             {
-                webSocket = new System.Net.WebSockets.ClientWebSocket();
-                System.Threading.Tasks.Task tsk = webSocket.ConnectAsync(new Uri(MetaData.url), System.Threading.CancellationToken.None);
+                webSocket = new ClientWebSocket();
+                Task tsk = webSocket.ConnectAsync(new Uri(MetaData.url), CancellationToken.None);
                 tsk.Wait();
             }
             catch (Exception)
@@ -298,7 +296,7 @@ namespace Slack
                 ServiceConnected?.Invoke();
                 _processMessages();
             }
-            catch (System.Threading.ThreadAbortException)
+            catch (ThreadAbortException)
             {
                 //this is fine, client is being shutdown
             }
@@ -319,7 +317,7 @@ namespace Slack
             {
                 if (webSocket != null)
                 {
-                    System.Threading.Tasks.Task tsk = webSocket.CloseAsync(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "", System.Threading.CancellationToken.None);
+                    Task tsk = webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
                     tsk.Wait();
                     webSocket.Dispose();
                     webSocket = null;
@@ -327,7 +325,7 @@ namespace Slack
 
                 ServiceDisconnected?.Invoke();
             }
-            catch (System.Threading.ThreadAbortException)
+            catch (ThreadAbortException)
             {
                 //this is fine, client is being shutdown
             }
@@ -336,7 +334,39 @@ namespace Slack
                 //do nothing
             }
         }
-        
+
+        //public async Task<bool> Ping(int i)
+        //{
+        //    dynamic ping = new ExpandoObject();
+        //    ping.id = i;
+        //    ping.type = "ping";
+        //    await SendJson(JsonConvert.SerializeObject(ping)).Wait();
+        //    await ReceiveJson();
+        //    return true;
+        //}
+
+        //private async Task<bool> SendJson(string json)
+        //{
+        //    var encoded = Encoding.UTF8.GetBytes(json);
+        //    var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
+        //    await webSocket.SendAsync(buffer, WebSocketMessageType.Text, 
+        //        true, CancellationToken.None);
+
+        //    return true;
+        //}
+
+        //private async Task ReceiveJson()
+        //{
+        //    var receivedBytes = new ArraySegment<byte>(new byte[1024]);
+        //    var result = await webSocket.ReceiveAsync(receivedBytes, CancellationToken.None);
+            
+        //    PongReceived?.Invoke();
+
+        //    //return true;
+
+        //    //Console.WriteLine(Encoding.UTF8.GetString(receivedBytes.Array, 0, result.Count));
+        //}
+
         public String APIRequest(String strURL)
         {
             try
