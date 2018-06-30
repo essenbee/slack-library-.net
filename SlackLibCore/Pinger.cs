@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Ninja.WebSockets;
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.WebSockets;
 using System.Text;
@@ -15,15 +13,12 @@ namespace SlackLibCore
         private int _id = 1;
         private readonly WebSocket _webSocket;
         private readonly TimeSpan _keepAliveInterval;
-        private readonly Task _pingTask;
         private readonly CancellationToken _cancellationToken;
-        private readonly PingPongManager _mgr;
 
-        public Pinger(WebSocket websocket, TimeSpan keepAliveInterval, PingPongManager mgr, CancellationToken token)
+        public Pinger(WebSocket websocket, TimeSpan keepAliveInterval, CancellationToken token)
         {
             _webSocket = websocket;
             _keepAliveInterval = keepAliveInterval;
-            _mgr = mgr;
             _cancellationToken = token;
 
             Task.Run(PingForever, _cancellationToken);
@@ -50,7 +45,8 @@ namespace SlackLibCore
                         var payload = JsonConvert.SerializeObject(ping);
                         var encoded = Encoding.UTF8.GetBytes(payload);
                         var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
-                        await _mgr.SendPing(buffer, _cancellationToken);
+                        await _webSocket.SendAsync(buffer,WebSocketMessageType.Text, true, _cancellationToken);
+                        Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tPing!"); ;
                     }
                 }
             }

@@ -54,7 +54,7 @@ namespace Slack
                         {
                             rtmChannel.created = new Slack.TimeStamp(ts);
                         }
-                        catch (RuntimeBinderException rtbex)
+                        catch (RuntimeBinderException)
                         {
                             rtmChannel.created = new TimeStamp(DateTime.Today);
                         }

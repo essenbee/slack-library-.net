@@ -26,9 +26,6 @@ namespace Slack
         public delegate void ServiceConnectedEventHandler();
         public delegate void ServiceConnectionFailedEventHandler();
         public delegate void ServiceDisconnectedEventHandler();
-
-        public delegate void PongReceievdEventHandler();
-
         public delegate void DataReceivedEventHandler(String data);
         public delegate void HelloEventHandler(HelloEventArgs e);
         public delegate void AccountsChangedEventHandler(AccountsChangedEventArgs e);
@@ -112,8 +109,6 @@ namespace Slack
         public event ServiceConnectedEventHandler ServiceConnected = null;
         public event ServiceConnectionFailedEventHandler ServiceConnectionFailed = null;
         public event ServiceDisconnectedEventHandler ServiceDisconnected = null;
-
-        public event PongReceievdEventHandler PongReceived = null;
 
         public event DataReceivedEventHandler DataReceived = null;
         public event HelloEventHandler Hello = null;
@@ -289,11 +284,7 @@ namespace Slack
                     NoDelay = true,
                 }).Result;
 
-                // var p = new PingPongManager(Guid.NewGuid(), webSocket, new TimeSpan(0, 0, 30), CancellationToken.None);
-                var pingMgr = new PingPongManager(Guid.NewGuid(), webSocket, TimeSpan.Zero, CancellationToken.None);
-                pingMgr.Pong += OnPongReceived;
-
-                var pinger = new Pinger(webSocket, new TimeSpan(0, 0, 30), pingMgr, CancellationToken.None);
+                var pinger = new Pinger(webSocket, new TimeSpan(0, 0, 30), CancellationToken.None);
 
             }
             catch (Exception)
@@ -315,14 +306,7 @@ namespace Slack
                 Console.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
             }
         }
-
-        private void OnPongReceived(object sender, PongEventArgs e)
-        {
-            //var message = Encoding.UTF8.GetString(e.Payload.Array, 0, 125);
-            //Console.WriteLine(message);
-            PongReceived?.Invoke();
-        }
-        
+     
         public void Disconnect()
         {
             _disconnect();
@@ -386,7 +370,7 @@ namespace Slack
             }
         }
         
-        public Slack.AuthTestResponse AuthTest()
+        public AuthTestResponse AuthTest()
         {
             //https://api.slack.com/methods/api.test
             dynamic Response;
@@ -400,7 +384,7 @@ namespace Slack
                 throw new Exception("Could not perform auth test.", ex);
             }
             CheckForError(Response);
-            return new Slack.AuthTestResponse(Response);
+            return new AuthTestResponse(Response);
         }
         
         public void CheckForError(dynamic Response)
@@ -418,21 +402,21 @@ namespace Slack
                 switch ((string)Response.error)
                 {
                     case "account_inactive":
-                        throw new Slack.Exceptions.AccountInactiveException();
+                        throw new Exceptions.AccountInactiveException();
                     case "already_archived":
-                        throw new Slack.Exceptions.AlreadyArchivedException();
+                        throw new Exceptions.AlreadyArchivedException();
                     case "already_in_channel":
-                        throw new Slack.Exceptions.AlreadyInChannelException();
+                        throw new Exceptions.AlreadyInChannelException();
                     case "cant_archive_general":
-                        throw new Slack.Exceptions.CantArchiveGeneralException();
+                        throw new Exceptions.CantArchiveGeneralException();
                     case "cant_delete_message":
-                        throw new Slack.Exceptions.CantDeleteMessageException();
+                        throw new Exceptions.CantDeleteMessageException();
                     case "cant_invite":
-                        throw new Slack.Exceptions.CantInviteException();
+                        throw new Exceptions.CantInviteException();
                     case "cant_invite_self":
-                        throw new Slack.Exceptions.CantInviteSelfException();
+                        throw new Exceptions.CantInviteSelfException();
                     case "cant_kick_self":
-                        throw new Slack.Exceptions.CantKickSelfException();
+                        throw new Exceptions.CantKickSelfException();
                     case "cant_kick_from_general":
                         throw new Slack.Exceptions.CantKickFromGeneralException();
                     case "cant_kick_from_last_channel":
@@ -522,7 +506,7 @@ namespace Slack
                 {
                     try
                     {
-                        System.Threading.Tasks.Task<String> tsk = _readMessage();
+                        Task<String> tsk = _readMessage();
                         tsk.Wait();
                         var strMessage = tsk.Result;
                         DataReceived?.Invoke(strMessage);
@@ -532,6 +516,9 @@ namespace Slack
                             case "hello":
                                 HelloEventArgs helloEventArgs = new HelloEventArgs();
                                 Hello?.Invoke(helloEventArgs);
+                                break;
+                            case "pong":
+                                Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tPong!");
                                 break;
                             case "accounts_changed":
                                 _refreshRTMMetaData();

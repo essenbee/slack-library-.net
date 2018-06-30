@@ -33,8 +33,6 @@ namespace TesterCore
             client.ServiceConnectionFailed += new Client.ServiceConnectionFailedEventHandler(client_ServiceDisconnected_ServiceConnectionFailure);
             client.ServiceDisconnected += new Client.ServiceDisconnectedEventHandler(client_ServiceDisconnected_ServiceConnectionFailure);
 
-            client.PongReceived += client_Pong;
-
             client.Hello += new Client.HelloEventHandler(client_Hello);
             client.DataReceived += new Client.DataReceivedEventHandler(client_DataReceived);
             client.UserTyping += new Client.UserTypingEventHandler(client_UserTyping);
@@ -71,12 +69,6 @@ namespace TesterCore
         {
             connectionFailures = 0;
             Console.WriteLine("Connected to slack service.");
-        }
-
-        private static void client_Pong()
-        {
-            connectionFailures = 0;
-            Console.WriteLine("Pong received!");
         }
 
         private static void client_ServiceDisconnected_ServiceConnectionFailure()
@@ -129,7 +121,7 @@ namespace TesterCore
 
         private static void client_UserTyping(UserTypingEventArgs e)
         {
-            Console.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "\tUser Typing.\t\t[" + e.UserInfo.name + "] [" + e.channel + "]");
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "\tUser Typing.\t\t[" + e.UserInfo.name + "] [" + e.channel + "]");
         }
 
         private static void client_Message(MessageEventArgs e)
