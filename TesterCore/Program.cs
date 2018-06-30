@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Slack;
 
@@ -14,7 +15,7 @@ namespace TesterCore
         public static IConfiguration Configuration { get; set; }
 
         //main entry point for application
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -31,6 +32,8 @@ namespace TesterCore
             client.ServiceConnected += new Client.ServiceConnectedEventHandler(client_ServiceConnected);
             client.ServiceConnectionFailed += new Client.ServiceConnectionFailedEventHandler(client_ServiceDisconnected_ServiceConnectionFailure);
             client.ServiceDisconnected += new Client.ServiceDisconnectedEventHandler(client_ServiceDisconnected_ServiceConnectionFailure);
+
+            client.PongReceived += client_Pong;
 
             client.Hello += new Client.HelloEventHandler(client_Hello);
             client.DataReceived += new Client.DataReceivedEventHandler(client_DataReceived);
@@ -54,6 +57,7 @@ namespace TesterCore
 
             //simply hold application open until user presses enter
             Console.WriteLine("Press Enter to Terminate.");
+
             Console.ReadLine();
 
             //disconnect from slack service
@@ -67,6 +71,12 @@ namespace TesterCore
         {
             connectionFailures = 0;
             Console.WriteLine("Connected to slack service.");
+        }
+
+        private static void client_Pong()
+        {
+            connectionFailures = 0;
+            Console.WriteLine("Pong received!");
         }
 
         private static void client_ServiceDisconnected_ServiceConnectionFailure()
@@ -124,18 +134,18 @@ namespace TesterCore
 
         private static void client_Message(MessageEventArgs e)
         {
-            if (e.user == null)
-            {
-                return;
-            }
-            Console.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "\tMessage.\t\t[" + e.UserInfo.name + "] [" + e.text + "]");
-            Process_Message(e.UserInfo.name, e.channel, e.text);
+            var user = e?.UserInfo?.name ?? string.Empty;
+            var text = e?.text ?? "<< none >>";
+
+            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tMessage.\t\t[{user}] [{text}]");
         }
 
         private static void client_MessageEdit(MessageEditEventArgs e)
         {
-            Console.WriteLine(System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "\tMessage Edit. [" + e.UserInfo.name + "] [" + e.message.text + "]");
-            Process_Message(e.UserInfo.name, e.channel, e.message.text);
+            var user = e?.UserInfo?.name ?? string.Empty;
+            var text = e?.message?.text ?? "<< deleted >>";
+
+            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tMessage.\t\t[{user}] [{text}]");
         }
 
         #endregion

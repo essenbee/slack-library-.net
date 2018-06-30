@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
-using System.Dynamic;
-using Newtonsoft.Json;
+using Ninja.WebSockets;
+using SlackLibCore;
 
 namespace Slack
 {
@@ -104,7 +104,7 @@ namespace Slack
 
         private const string URL_RTM_START = "https://slack.com/api/rtm.start";
 
-        private ClientWebSocket webSocket;
+        private WebSocket webSocket;
         private Thread clientThread = null;
         
         #region Public Events
@@ -265,7 +265,7 @@ namespace Slack
             {
                 throw ex;
             }
-            clientThread = new System.Threading.Thread(_connect);
+            clientThread = new Thread(_connect);
             clientThread.Start();
         }
         
@@ -275,16 +275,26 @@ namespace Slack
             {
                 _refreshRTMMetaData();
             }
-            catch (Exceptions.ServiceDisconnectedException ex)
+            catch (Exceptions.ServiceDisconnectedException)
             {
                 ServiceDisconnected?.Invoke();
                 return;
             }
             try
             {
-                webSocket = new ClientWebSocket();
-                Task tsk = webSocket.ConnectAsync(new Uri(MetaData.url), CancellationToken.None);
-                tsk.Wait();
+                var factory = new WebSocketClientFactory();
+                webSocket = factory.ConnectAsync(new Uri(MetaData.url), new WebSocketClientOptions
+                {
+                    KeepAliveInterval = TimeSpan.Zero,
+                    NoDelay = true,
+                }).Result;
+
+                // var p = new PingPongManager(Guid.NewGuid(), webSocket, new TimeSpan(0, 0, 30), CancellationToken.None);
+                var pingMgr = new PingPongManager(Guid.NewGuid(), webSocket, TimeSpan.Zero, CancellationToken.None);
+                pingMgr.Pong += OnPongReceived;
+
+                var pinger = new Pinger(webSocket, new TimeSpan(0, 0, 30), pingMgr, CancellationToken.None);
+
             }
             catch (Exception)
             {
@@ -304,6 +314,13 @@ namespace Slack
             {
                 Console.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
             }
+        }
+
+        private void OnPongReceived(object sender, PongEventArgs e)
+        {
+            //var message = Encoding.UTF8.GetString(e.Payload.Array, 0, 125);
+            //Console.WriteLine(message);
+            PongReceived?.Invoke();
         }
         
         public void Disconnect()
@@ -334,38 +351,6 @@ namespace Slack
                 //do nothing
             }
         }
-
-        //public async Task<bool> Ping(int i)
-        //{
-        //    dynamic ping = new ExpandoObject();
-        //    ping.id = i;
-        //    ping.type = "ping";
-        //    await SendJson(JsonConvert.SerializeObject(ping)).Wait();
-        //    await ReceiveJson();
-        //    return true;
-        //}
-
-        //private async Task<bool> SendJson(string json)
-        //{
-        //    var encoded = Encoding.UTF8.GetBytes(json);
-        //    var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
-        //    await webSocket.SendAsync(buffer, WebSocketMessageType.Text, 
-        //        true, CancellationToken.None);
-
-        //    return true;
-        //}
-
-        //private async Task ReceiveJson()
-        //{
-        //    var receivedBytes = new ArraySegment<byte>(new byte[1024]);
-        //    var result = await webSocket.ReceiveAsync(receivedBytes, CancellationToken.None);
-            
-        //    PongReceived?.Invoke();
-
-        //    //return true;
-
-        //    //Console.WriteLine(Encoding.UTF8.GetString(receivedBytes.Array, 0, result.Count));
-        //}
 
         public String APIRequest(String strURL)
         {
