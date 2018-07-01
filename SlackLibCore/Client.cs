@@ -21,12 +21,12 @@ namespace SlackLibCore
 
         #region Delegates
 
-
         public delegate void ServiceConnectedEventHandler();
         public delegate void ServiceConnectionFailedEventHandler();
         public delegate void ServiceDisconnectedEventHandler();
         public delegate void DataReceivedEventHandler(String data);
         public delegate void HelloEventHandler(HelloEventArgs e);
+        public delegate void PongEventHandler(PongEventArgs e);
         public delegate void AccountsChangedEventHandler(AccountsChangedEventArgs e);
         public delegate void BotAddedEventHandler(BotAddedEventArgs e);
         public delegate void BotChangedEventHandler(BotChangedEventArgs e);
@@ -111,6 +111,8 @@ namespace SlackLibCore
 
         public event DataReceivedEventHandler DataReceived = null;
         public event HelloEventHandler Hello = null;
+        public event PongEventHandler Pong = null;
+
         public event AccountsChangedEventHandler AccountsChanged = null;
         public event BotAddedEventHandler BotAdded = null;
         public event BotChangedEventHandler BotChanged = null;
@@ -496,7 +498,6 @@ namespace SlackLibCore
             }
         }
 
-
         private void _processMessages()
         {
             try
@@ -517,6 +518,9 @@ namespace SlackLibCore
                                 Hello?.Invoke(helloEventArgs);
                                 break;
                             case "pong":
+                                var pongEventArgs = new PongEventArgs(Data);
+                                Pong?.Invoke(pongEventArgs);
+
                                 Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tPong!");
                                 break;
                             case "accounts_changed":
