@@ -2,24 +2,9 @@
 
 namespace SlackLibCore.Messages
 {
-
     public interface IMessage
     {
-
-
-        String Type
-        {
-            get;
-        }
-
-
-        TimeStamp ts
-        {
-            get;
-        }
-
-
+        String Type { get; }
+        TimeStamp ts { get; }
     }
-
-
 }

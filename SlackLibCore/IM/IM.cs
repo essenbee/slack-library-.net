@@ -3,31 +3,27 @@ using Newtonsoft.Json.Linq;
 
 namespace SlackLibCore
 {
-
-
     public partial class IM
     {
-
-
         private Client _client;
-
 
         public IM(Client Client)
         {
             _client = Client;
         }
 
-
         public OpenResponse Open(String strUserID)
         {
             //https://api.slack.com/methods/im.open
+
             dynamic Response;
+
             try
             {
-                String strURL =
+                var strURL =
                     "https://slack.com/api/im.open?token=" + _client.APIKey +
                     "&user=" + System.Web.HttpUtility.UrlEncode(strUserID);
-                String strResponse = _client.APIRequest(strURL);
+                var strResponse = _client.APIRequest(strURL);
                 Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
@@ -35,9 +31,9 @@ namespace SlackLibCore
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
+
             return new OpenResponse(Response);
         }
-
 
         public ListResponse List()
         {
@@ -45,7 +41,7 @@ namespace SlackLibCore
             dynamic Response;
             try
             {
-                String strResponse = _client.APIRequest("https://slack.com/api/im.list?token=" + _client.APIKey);
+                var strResponse = _client.APIRequest("https://slack.com/api/im.list?token=" + _client.APIKey);
                 Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
@@ -53,20 +49,22 @@ namespace SlackLibCore
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
-            return new IM.ListResponse(_client, Response);
+
+            return new ListResponse(_client, Response);
         }
 
-
-        public Boolean Close(String channel)
+        public bool Close(String channel)
         {
             //https://api.slack.com/methods/im.close
+
             dynamic Response;
+
             try
             {
                 String strURL =
                     "https://slack.com/api/im.close?token=" + _client.APIKey +
                     "&channel=" + System.Web.HttpUtility.UrlEncode(channel);
-                String strResponse = _client.APIRequest(strURL);
+                var strResponse = _client.APIRequest(strURL);
                 Response = JObject.Parse(strResponse);
             }
             catch (Exception ex)
@@ -74,12 +72,8 @@ namespace SlackLibCore
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
+
             return Utility.TryGetProperty(Response, "ok", false);
         }
-
-
     }
-
-
-
 }

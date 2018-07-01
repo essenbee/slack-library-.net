@@ -15,6 +15,7 @@ namespace SlackLibCore
         public DoNotDisturbStatus Info(String user)
         {
             //https://api.slack.com/methods/dnd.info
+
             dynamic Response;
             try
             {
@@ -34,10 +35,10 @@ namespace SlackLibCore
             return new DoNotDisturbStatus(Response);
         }
 
-
         public DoNotDisturbStatus SetSnooze(Int32 minutes)
         {
             //https://api.slack.com/methods/dnd.setSnooze
+
             dynamic Response;
             try
             {
@@ -55,10 +56,10 @@ namespace SlackLibCore
             return new DoNotDisturbStatus(Response);
         }
 
-
         public DoNotDisturbStatus EndSnooze()
         {
             //https://api.slack.com/methods/dnd.endSnooze
+
             dynamic Response;
             try
             {
@@ -73,10 +74,10 @@ namespace SlackLibCore
             return new DoNotDisturbStatus(Response);
         }
 
-
         public Boolean EndDND()
         {
             //https://api.slack.com/methods/dnd.endDnd
+
             dynamic Response;
             try
             {
@@ -90,9 +91,5 @@ namespace SlackLibCore
             _client.CheckForError(Response);
             return Utility.TryGetProperty(Response, "ok", false);
         }
-
-
     }
-
-
 }

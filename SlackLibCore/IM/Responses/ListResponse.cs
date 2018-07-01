@@ -5,32 +5,23 @@ namespace SlackLibCore
 {
     public partial class IM
     {
-
-
         public class ListResponse
         {
-
             //https://api.slack.com/methods/im.list
-
 
             public class IM
             {
-
-
                 private Client _client;
-
-                public String id;
-                public Boolean is_im;
-                public String user;
+                public string id;
+                public bool is_im;
+                public string user;
                 public TimeStamp created;
-                public Boolean is_user_deleted;
-
+                public bool is_user_deleted;
 
                 public IM(Client client)
                 {
                     _client = client;
                 }
-
 
                 public RTM.User UserInfo
                 {
@@ -50,13 +41,10 @@ namespace SlackLibCore
                         return null;
                     }
                 }
-
-            
+           
             }
 
-
             public List<IM> ims;
-
 
             public ListResponse(Client client, dynamic Response)
             {
@@ -77,10 +65,6 @@ namespace SlackLibCore
                     ims.Add(objIM);
                 }
             }
-
-
         }
-
-
     }
 }

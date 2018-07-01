@@ -800,7 +800,7 @@ namespace SlackLibCore
                                 break;
                         }
                     }
-                    catch (System.AggregateException ex)
+                    catch (AggregateException ex)
                     {
                         throw ex.InnerException;
                     }
@@ -808,7 +808,7 @@ namespace SlackLibCore
                     {
                         throw ex;
                     }
-                    catch (System.Threading.ThreadAbortException ex)
+                    catch (ThreadAbortException ex)
                     {
                         throw ex;
                     }
@@ -822,7 +822,7 @@ namespace SlackLibCore
             {
                 //do nothing....normal for disconnected slack service
             }
-            catch (System.Threading.ThreadAbortException)
+            catch (ThreadAbortException)
             {
                 //this is fine, client is being shutdown
             }
@@ -839,7 +839,7 @@ namespace SlackLibCore
             {
                 ArraySegment<Byte> buffer = new ArraySegment<byte>(new Byte[8192]);
 
-                System.Net.WebSockets.WebSocketReceiveResult result = null;
+                WebSocketReceiveResult result = null;
 
                 while (true)
                 {
@@ -847,13 +847,13 @@ namespace SlackLibCore
                     {
                         do
                         {
-                            result = await webSocket.ReceiveAsync(buffer, System.Threading.CancellationToken.None);
+                            result = await webSocket.ReceiveAsync(buffer, CancellationToken.None);
                             ms.Write(buffer.Array, buffer.Offset, result.Count);
                         } while (!result.EndOfMessage);
 
                         ms.Seek(0, System.IO.SeekOrigin.Begin);
 
-                        if (result.MessageType == System.Net.WebSockets.WebSocketMessageType.Text)
+                        if (result.MessageType == WebSocketMessageType.Text)
                         {
                             using (var reader = new System.IO.StreamReader(ms, Encoding.UTF8))
                             {
@@ -865,7 +865,7 @@ namespace SlackLibCore
                     }
                 }
             }
-            catch (System.Net.WebSockets.WebSocketException ex)
+            catch (WebSocketException ex)
             {
                 _disconnect();
                 throw new Exceptions.ServiceDisconnectedException(ex);

@@ -2,69 +2,28 @@
 
 namespace SlackLibCore.Messages
 {
-
-
     public class Text : IMessage
     {
-
-
         private Client _client;
-        private String _type;
-        private TimeStamp _ts;
-
-        private String _user;
-        private String _text;
-
-
+        public String Type { get; }
+        public TimeStamp ts { get; }
+        public String text { get; }
+        public String User { get; }
+        
         public Text(Client Client, dynamic Data)
         {
             _client = Client;
-            _type = Utility.TryGetProperty(Data, "type");
-            _ts = new TimeStamp(Utility.TryGetProperty(Data, "ts", 0));
-            _user = Utility.TryGetProperty(Data, "user");
-            if (_user == "")
+            Type = Utility.TryGetProperty(Data, "type");
+            ts = new TimeStamp(Utility.TryGetProperty(Data, "ts", 0));
+            User = Utility.TryGetProperty(Data, "user");
+
+            if (User.Equals(string.Empty))
             {
-                _user = Utility.TryGetProperty(Data, "username");
+                User = Utility.TryGetProperty(Data, "username");
             }
-            _text = Utility.TryGetProperty(Data, "text");
+
+            text = Utility.TryGetProperty(Data, "text");
         }
-
-
-        public String Type
-        {
-            get
-            {
-                return _type;
-            }
-        }
-
-
-        public TimeStamp ts
-        {
-            get
-            {
-                return _ts;
-            }
-        }
-
-
-        public String text
-        {
-            get
-            {
-                return _text;
-            }
-        }
-
-
-        public String User
-        {
-            get
-            {
-                return _user;
-            }
-        }
-
 
         public RTM.User UserInfo
         {
@@ -72,17 +31,14 @@ namespace SlackLibCore.Messages
             {
                 foreach (RTM.User user in _client.MetaData.users)
                 {
-                    if (user.id == _user)
+                    if (user.id == User)
                     {
                         return user;
                     }
                 }
+
                 return null;
             }
         }
-
-
     }
-
-
 }

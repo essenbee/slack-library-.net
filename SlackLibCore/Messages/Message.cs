@@ -12,10 +12,7 @@ namespace SlackLibCore.Messages
                 user = data.user;
             }
 
-
             public String user { get; }
-
-
             public String ts { get; }
         }
 
@@ -27,16 +24,10 @@ namespace SlackLibCore.Messages
             user = data.message.user;
         }
         
-        public String user { get; }
-        
+        public String user { get; }  
         public String text { get; }
-        
         public Edited edited { get; }
-        
         public String Type => "message";
-        
         public TimeStamp ts { get; }
     }
-
-
 }
