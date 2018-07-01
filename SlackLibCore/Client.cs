@@ -12,7 +12,7 @@ namespace SlackLibCore
     {
         #region Declerations
 
-        const string COMMAND_PREFIX = "!";
+        public static string COMMAND_PREFIX = "!";
 
         public string APIKey { get; }
         public RTM.MetaData MetaData { get; private set; }

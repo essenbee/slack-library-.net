@@ -107,8 +107,9 @@ namespace TesterCore
 
         private static void client_ProcessCommand(CommandEventArgs e)
         {
-            var fullCommand = e?.FullCommandText ?? "<< none >>";
-            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tCommand.\t\t[{e.User}] invoked [{fullCommand}]");
+            var cmd = e?.Command ?? "<< none >>";
+            var args = e?.ArgsAsString ?? string.Empty;
+            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tCommand.\t\t[{e.UserName}] invoked [{cmd}] with args [{args}]");
         }
 
         private static void client_DoNotDisturbUpdatedUser(DoNotDisturbUpdatedUserEventArgs e)
