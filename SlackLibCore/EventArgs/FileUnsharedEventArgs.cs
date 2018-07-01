@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -15,7 +15,7 @@ namespace Slack
     {
 
 
-        private Slack.FileObject _file;
+        private FileObject _file;
 
 
         public FileUnsharedEventArgs(dynamic Data)
@@ -23,7 +23,7 @@ namespace Slack
             _file = new FileObject(Data.file);
         }
 
-        public Slack.FileObject file
+        public FileObject file
         {
             get
             {

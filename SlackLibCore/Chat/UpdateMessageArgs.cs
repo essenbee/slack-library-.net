@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
     public partial class Chat
@@ -21,7 +17,7 @@ namespace Slack
             }
 
             public String channel = "";
-            public Slack.TimeStamp ts = null;
+            public TimeStamp ts = null;
             public String text = "";
             public String parse = "full";
             public Int32 link_names = 1;

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -13,10 +9,10 @@ namespace Slack
     {
 
 
-        private Slack.Client _client;
+        private Client _client;
 
 
-        public IM(Slack.Client Client)
+        public IM(Client Client)
         {
             _client = Client;
         }
@@ -39,7 +35,7 @@ namespace Slack
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.IM.OpenResponse(Response);
+            return new OpenResponse(Response);
         }
 
 
@@ -57,7 +53,7 @@ namespace Slack
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.IM.ListResponse(_client, Response);
+            return new IM.ListResponse(_client, Response);
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Slack
+namespace SlackLibCore
 {
     //https://api.slack.com/types/file
     

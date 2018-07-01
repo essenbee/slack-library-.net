@@ -1,11 +1,8 @@
-﻿using System;
+﻿using SlackLibCore.Messages;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace Slack.Channels
+namespace SlackLibCore.Channels
 {
 
 
@@ -16,20 +13,20 @@ namespace Slack.Channels
     {
 
 
-        private Slack.Client _client;
-        private Slack.Channels.HistoryRequestArgs _args;
-        private Slack.TimeStamp _latest;
-        private List<Slack.Messages.IMessage> _messages;
+        private Client _client;
+        private Channels.HistoryRequestArgs _args;
+        private TimeStamp _latest;
+        private List<Messages.IMessage> _messages;
         private Boolean _hasMore;
 
 
-        public HistoryResponse(Slack.Client Client, Slack.Channels.HistoryRequestArgs args, dynamic Response)
+        public HistoryResponse(Client Client, Channels.HistoryRequestArgs args, dynamic Response)
         {
             _client = Client;
             _args = args;
-            _latest = new Slack.TimeStamp(Utility.TryGetProperty(Response, "latest", 0).ToString());
+            _latest = new TimeStamp(Utility.TryGetProperty(Response, "latest", 0).ToString());
             _hasMore = Utility.TryGetProperty(Response, "has_more", false);
-            _messages = new List<Messages.IMessage>();
+            _messages = new List<IMessage>();
             String strType;
             foreach (dynamic message in Response.messages)
             {
@@ -37,10 +34,10 @@ namespace Slack.Channels
                 switch (strType)
                 {
                     case "message":
-                        _messages.Add(new Slack.Messages.Text(_client, message));
+                        _messages.Add(new Messages.Text(_client, message));
                         break;
                     default:
-                        _messages.Add(new Slack.Messages.Unknown(message));
+                        _messages.Add(new Unknown(message));
                         break;
                 }
             }
@@ -58,7 +55,7 @@ namespace Slack.Channels
         }
 
 
-        public Slack.TimeStamp latest
+        public TimeStamp latest
         {
             get
             {
@@ -67,7 +64,7 @@ namespace Slack.Channels
         }
 
 
-        public List<Slack.Messages.IMessage> Messages
+        public List<IMessage> Messages
         {
             get
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Slack
+namespace SlackLibCore
 {
     public class TimeStamp
     {

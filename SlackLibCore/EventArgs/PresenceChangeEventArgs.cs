@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -15,13 +15,13 @@ namespace Slack
     {
 
 
-        private Slack.Client _client;
+        private Client _client;
 
         private String _user;
         private String _presence;
 
 
-        public PresenceChangeEventArgs(Slack.Client Client, dynamic Data)
+        public PresenceChangeEventArgs(Client Client, dynamic Data)
         {
             _client = Client;
             _presence = Utility.TryGetProperty(Data, "presence");

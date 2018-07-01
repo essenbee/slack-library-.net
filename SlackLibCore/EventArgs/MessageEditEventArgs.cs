@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Slack.Messages;
+using SlackLibCore.Messages;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -16,7 +12,7 @@ namespace Slack
         //https://api.slack.com/events/message
 
 
-        private Slack.Client _client;
+        private Client _client;
 
         private Messages.Message _message;
         private String _subtype;
@@ -24,10 +20,10 @@ namespace Slack
         private String _channel;
         private Previous_Message _previous_message;
         private String _event_ts;
-        private Slack.TimeStamp _ts;
+        private TimeStamp _ts;
 
 
-        public MessageEditEventArgs(Slack.Client Client, dynamic Data)
+        public MessageEditEventArgs(Client Client, dynamic Data)
         {
             _client = Client;
             _channel = Data.channel;
@@ -40,7 +36,7 @@ namespace Slack
             }
             _previous_message = new Previous_Message(Data.previous_message);
             _subtype = Data.subtype;
-            _ts = new Slack.TimeStamp((String)Data.ts);
+            _ts = new TimeStamp((String)Data.ts);
         }
 
 
@@ -98,7 +94,7 @@ namespace Slack
         }
 
 
-        public Slack.TimeStamp ts
+        public TimeStamp ts
         {
             get
             {
@@ -123,11 +119,11 @@ namespace Slack
         }
 
 
-        public RTM.ims IMSInfo
+        public ims IMSInfo
         {
             get
             {
-                foreach (RTM.ims ims in _client.MetaData.ims)
+                foreach (ims ims in _client.MetaData.ims)
                 {
                     if (ims.id == _channel)
                     {

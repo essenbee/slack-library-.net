@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace Slack.Channels
+namespace SlackLibCore.Channels
 {
 
 
@@ -14,8 +9,8 @@ namespace Slack.Channels
 
 
         public String channel;
-        public Slack.TimeStamp latest = new Slack.TimeStamp(DateTime.Now.ToUniversalTime());
-        public Slack.TimeStamp oldest = new Slack.TimeStamp(Slack.TimeStamp.MinValue);
+        public TimeStamp latest = new TimeStamp(DateTime.Now.ToUniversalTime());
+        public TimeStamp oldest = new TimeStamp(TimeStamp.MinValue);
         public Boolean inclusive = false;
         public Boolean unreads = false;
 
@@ -40,7 +35,7 @@ namespace Slack.Channels
         }
 
 
-        public HistoryRequestArgs(String channel, Slack.TimeStamp latest, Slack.TimeStamp oldest, Boolean inclusive, Int32 count, Boolean unreads)
+        public HistoryRequestArgs(String channel, TimeStamp latest, TimeStamp oldest, Boolean inclusive, Int32 count, Boolean unreads)
         {
             this.channel = channel;
             this.latest = latest;

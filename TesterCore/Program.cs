@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Slack;
+using SlackLibCore;
 
 namespace TesterCore
 {
@@ -15,7 +15,7 @@ namespace TesterCore
         public static IConfiguration Configuration { get; set; }
 
         //main entry point for application
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

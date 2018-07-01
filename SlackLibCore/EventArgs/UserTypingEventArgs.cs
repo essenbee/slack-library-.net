@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -15,13 +11,13 @@ namespace Slack
         //https://api.slack.com/events/user_typing
 
 
-        private Slack.Client _client;
+        private Client _client;
 
         private String _channel;
         private String _user;
 
 
-        public UserTypingEventArgs(Slack.Client Client, dynamic Data)
+        public UserTypingEventArgs(Client Client, dynamic Data)
         {
             _client = Client;
             _channel = Data.channel;
@@ -38,11 +34,11 @@ namespace Slack
         }
 
 
-        public RTM.ims IMSInfo
+        public ims IMSInfo
         {
             get
             {
-                foreach (RTM.ims ims in _client.MetaData.ims)
+                foreach (ims ims in _client.MetaData.ims)
                 {
                     if (ims.id == _channel)
                     {

@@ -1,28 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Slack
+namespace SlackLibCore
 {
-
-
     public partial class DND
     {
+        private Client _client;
 
-
-        private Slack.Client _client;
-
-
-        public DND(Slack.Client Client)
+        public DND(Client Client)
         {
             _client = Client;
         }
 
-
-        public Slack.DoNotDisturbStatus Info(String user)
+        public DoNotDisturbStatus Info(String user)
         {
             //https://api.slack.com/methods/dnd.info
             dynamic Response;
@@ -45,7 +35,7 @@ namespace Slack
         }
 
 
-        public Slack.DoNotDisturbStatus SetSnooze(Int32 minutes)
+        public DoNotDisturbStatus SetSnooze(Int32 minutes)
         {
             //https://api.slack.com/methods/dnd.setSnooze
             dynamic Response;
@@ -66,7 +56,7 @@ namespace Slack
         }
 
 
-        public Slack.DoNotDisturbStatus EndSnooze()
+        public DoNotDisturbStatus EndSnooze()
         {
             //https://api.slack.com/methods/dnd.endSnooze
             dynamic Response;

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack.Messages
+namespace SlackLibCore.Messages
 {
 
 
@@ -12,19 +8,19 @@ namespace Slack.Messages
     {
 
 
-        private Slack.Client _client;
+        private Client _client;
         private String _type;
-        private Slack.TimeStamp _ts;
+        private TimeStamp _ts;
 
         private String _user;
         private String _text;
 
 
-        public Text(Slack.Client Client, dynamic Data)
+        public Text(Client Client, dynamic Data)
         {
             _client = Client;
             _type = Utility.TryGetProperty(Data, "type");
-            _ts = new Slack.TimeStamp(Utility.TryGetProperty(Data, "ts", 0));
+            _ts = new TimeStamp(Utility.TryGetProperty(Data, "ts", 0));
             _user = Utility.TryGetProperty(Data, "user");
             if (_user == "")
             {
@@ -43,7 +39,7 @@ namespace Slack.Messages
         }
 
 
-        public Slack.TimeStamp ts
+        public TimeStamp ts
         {
             get
             {

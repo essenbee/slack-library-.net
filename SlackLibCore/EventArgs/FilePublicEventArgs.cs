@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -16,7 +16,7 @@ namespace Slack
     {
 
 
-        private Slack.FileObject _file;
+        private FileObject _file;
 
 
         public FilePublicEventArgs(dynamic Data)
@@ -25,7 +25,7 @@ namespace Slack
         }
 
 
-        public Slack.FileObject file
+        public FileObject file
         {
             get
             {

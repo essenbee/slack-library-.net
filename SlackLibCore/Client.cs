@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
 using Ninja.WebSockets;
-using SlackLibCore;
 
-namespace Slack
+namespace SlackLibCore
 {
     public class Client : IDisposable
     {
@@ -418,81 +417,81 @@ namespace Slack
                     case "cant_kick_self":
                         throw new Exceptions.CantKickSelfException();
                     case "cant_kick_from_general":
-                        throw new Slack.Exceptions.CantKickFromGeneralException();
+                        throw new Exceptions.CantKickFromGeneralException();
                     case "cant_kick_from_last_channel":
-                        throw new Slack.Exceptions.CantKickFromLastChannelException();
+                        throw new Exceptions.CantKickFromLastChannelException();
                     case "cant_leave_general":
-                        throw new Slack.Exceptions.CantLeaveGeneralException();
+                        throw new Exceptions.CantLeaveGeneralException();
                     case "cant_update_message":
-                        throw new Slack.Exceptions.CantUpdateMessageException();
+                        throw new Exceptions.CantUpdateMessageException();
                     case "channel_not_found":
-                        throw new Slack.Exceptions.ChannelNotFoundException();
+                        throw new Exceptions.ChannelNotFoundException();
                     case "compliance_exports_prevent_deletion":
-                        throw new Slack.Exceptions.ComplianceExportsPreventDeletionException();
+                        throw new Exceptions.ComplianceExportsPreventDeletionException();
                     case "edit_window_closed":
-                        throw new Slack.Exceptions.EditWindowClosedException();
+                        throw new Exceptions.EditWindowClosedException();
                     case "invalid_array_arg":
-                        throw new Slack.Exceptions.InvalidArrayArgException();
+                        throw new Exceptions.InvalidArrayArgException();
                     case "invalid_auth":
-                        throw new Slack.Exceptions.InvalidAuthException();
+                        throw new Exceptions.InvalidAuthException();
                     case "invalid_charset":
-                        throw new Slack.Exceptions.InvalidCharsetException();
+                        throw new Exceptions.InvalidCharsetException();
                     case "invalid_form_data":
-                        throw new Slack.Exceptions.InvalidFormDataException();
+                        throw new Exceptions.InvalidFormDataException();
                     case "invalid_post_type":
-                        throw new Slack.Exceptions.InvalidPostTypeException();
+                        throw new Exceptions.InvalidPostTypeException();
                     case "invalid_timestamp":
-                        throw new Slack.Exceptions.InvalidTimestampException();
+                        throw new Exceptions.InvalidTimestampException();
                     case "invalid_ts_latest":
-                        throw new Slack.Exceptions.InvalidTSLatestException();
+                        throw new Exceptions.InvalidTSLatestException();
                     case "invalid_ts_oldest":
-                        throw new Slack.Exceptions.InvalidTSOldestException();
+                        throw new Exceptions.InvalidTSOldestException();
                     case "is_archived":
-                        throw new Slack.Exceptions.IsArchivedException();
+                        throw new Exceptions.IsArchivedException();
                     case "last_ra_channel":
-                        throw new Slack.Exceptions.LastRestrictedAccountException();
+                        throw new Exceptions.LastRestrictedAccountException();
                     case "message_not_found":
-                        throw new Slack.Exceptions.MessageNotFoundException();
+                        throw new Exceptions.MessageNotFoundException();
                     case "missing_duration":
-                        throw new Slack.Exceptions.MissingDurationException();
+                        throw new Exceptions.MissingDurationException();
                     case "missing_post_type":
-                        throw new Slack.Exceptions.MissingPostTypeException();
+                        throw new Exceptions.MissingPostTypeException();
                     case "msg_too_long":
-                        throw new Slack.Exceptions.MessageTooLongException();
+                        throw new Exceptions.MessageTooLongException();
                     case "name_taken":
-                        throw new Slack.Exceptions.NameTakenException();
+                        throw new Exceptions.NameTakenException();
                     case "no_channel":
-                        throw new Slack.Exceptions.NoChannelException();
+                        throw new Exceptions.NoChannelException();
                     case "no_text":
-                        throw new Slack.Exceptions.NoTextException();
+                        throw new Exceptions.NoTextException();
                     case "not_archived":
-                        throw new Slack.Exceptions.NotArchivedException();
+                        throw new Exceptions.NotArchivedException();
                     case "not_authed":
-                        throw new Slack.Exceptions.NotAuthedException();
+                        throw new Exceptions.NotAuthedException();
                     case "not_in_channel":
-                        throw new Slack.Exceptions.NotInChannelException();
+                        throw new Exceptions.NotInChannelException();
                     case "rate_limited":
-                        throw new Slack.Exceptions.RateLimitedException();
+                        throw new Exceptions.RateLimitedException();
                     case "restricted_action":
-                        throw new Slack.Exceptions.RestrictedActionException();
+                        throw new Exceptions.RestrictedActionException();
                     case "request_timeout":
-                        throw new Slack.Exceptions.RequestTimeoutException();
+                        throw new Exceptions.RequestTimeoutException();
                     case "too_long":
-                        throw new Slack.Exceptions.TooLongException();
+                        throw new Exceptions.TooLongException();
                     case "unknown_error":
-                        throw new Slack.Exceptions.UnknownErrorException();
+                        throw new Exceptions.UnknownErrorException();
                     case "user_disabled":
-                        throw new Slack.Exceptions.UserDisabledException();
+                        throw new Exceptions.UserDisabledException();
                     case "user_is_bot":
-                        throw new Slack.Exceptions.UserIsBotException();
+                        throw new Exceptions.UserIsBotException();
                     case "user_is_restricted":
-                        throw new Slack.Exceptions.UserIsRestrictedException();
+                        throw new Exceptions.UserIsRestrictedException();
                     case "user_is_ultra_restricted":
-                        throw new Slack.Exceptions.UserIsUltraRestrictedException();
+                        throw new Exceptions.UserIsUltraRestrictedException();
                     case "user_not_found":
-                        throw new Slack.Exceptions.UserNotFoundException();
+                        throw new Exceptions.UserNotFoundException();
                     case "user_not_visible":
-                        throw new Slack.Exceptions.UserNotVisibleException();
+                        throw new Exceptions.UserNotVisibleException();
                 }
             }
         }

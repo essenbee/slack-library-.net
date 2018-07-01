@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
     public partial class RTM
     {
-
-
         public struct team
         {
-            public String domain;
-            public String email_domain;
+            public string domain;
+            public string email_domain;
             public icon icon;
-            public String id;
-            public Int32 msg_edit_window_mins;
-            public String name;
-            public Boolean over_integrations_limit;
-            public Boolean over_storage_limit;
-            public String plan;
+            public string id;
+            public int msg_edit_window_mins;
+            public string name;
+            public bool over_integrations_limit;
+            public bool over_storage_limit;
+            public string plan;
             public Dictionary<String, String> prefs;
         }
-
-
     }
 }

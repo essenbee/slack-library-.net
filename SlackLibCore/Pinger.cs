@@ -10,42 +10,51 @@ namespace SlackLibCore
 {
     public class Pinger
     {
+        public string Payload { get; set; } = string.Empty;
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public TimeSpan KeepAliveInterval = new TimeSpan(0, 1, 0);
+
         private int _id = 1;
         private readonly WebSocket _webSocket;
-        private readonly TimeSpan _keepAliveInterval;
-        private readonly CancellationToken _cancellationToken;
 
         public Pinger(WebSocket websocket, TimeSpan keepAliveInterval, CancellationToken token)
         {
             _webSocket = websocket;
-            _keepAliveInterval = keepAliveInterval;
-            _cancellationToken = token;
 
-            Task.Run(PingForever, _cancellationToken);
+            KeepAliveInterval = keepAliveInterval;
+            CancellationToken = token;
+
+            Task.Run(PingForever, CancellationToken);
         }
         
         private async Task PingForever()
         {
             try
             {
-                while (!_cancellationToken.IsCancellationRequested)
+                while (!CancellationToken.IsCancellationRequested)
                 {
-                    await Task.Delay(_keepAliveInterval, _cancellationToken);
+                    await Task.Delay(KeepAliveInterval, CancellationToken);
 
                     if (_webSocket.State != WebSocketState.Open)
                     {
                         break;
                     }
 
-                    if (!_cancellationToken.IsCancellationRequested)
+                    if (!CancellationToken.IsCancellationRequested)
                     {
-                        dynamic ping = new ExpandoObject();
-                        ping.id = _id++;
-                        ping.type = "ping";
-                        var payload = JsonConvert.SerializeObject(ping);
-                        var encoded = Encoding.UTF8.GetBytes(payload);
+                        if (string.IsNullOrWhiteSpace(Payload))
+                        {
+                            dynamic ping = new ExpandoObject();
+                            ping.id = _id++;
+                            ping.type = "ping";
+                            Payload = JsonConvert.SerializeObject(ping);
+                        }
+
+                        var encoded = Encoding.UTF8.GetBytes(Payload);
                         var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
-                        await _webSocket.SendAsync(buffer,WebSocketMessageType.Text, true, _cancellationToken);
+
+                        await _webSocket.SendAsync(buffer,WebSocketMessageType.Text, true, CancellationToken);
+
                         Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tPing!"); ;
                     }
                 }
@@ -54,7 +63,6 @@ namespace SlackLibCore
             {
                 // normal, do nothing
             }
-
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Slack.Messages
+namespace SlackLibCore.Messages
 {
     public class Message : IMessage
     {
@@ -23,7 +23,7 @@ namespace Slack.Messages
         {
             edited = new Edited(data.message.edited);
             text = data.message.text;
-            ts = new Slack.TimeStamp( (String)data.message.ts);
+            ts = new TimeStamp( (String)data.message.ts);
             user = data.message.user;
         }
         
@@ -35,7 +35,7 @@ namespace Slack.Messages
         
         public String Type => "message";
         
-        public Slack.TimeStamp ts { get; }
+        public TimeStamp ts { get; }
     }
 
 

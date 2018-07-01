@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Slack.Messages
+namespace SlackLibCore.Messages
 {
 
     public interface IMessage
@@ -13,7 +13,7 @@ namespace Slack.Messages
         }
 
 
-        Slack.TimeStamp ts
+        TimeStamp ts
         {
             get;
         }

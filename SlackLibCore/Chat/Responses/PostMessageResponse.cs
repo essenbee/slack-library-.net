@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace Slack
+namespace SlackLibCore
 {
     public partial class Chat
     {
@@ -19,15 +14,15 @@ namespace Slack
 
 
             public String channel;
-            public Slack.TimeStamp ts;
-            public Slack.Messages.Text message;
+            public TimeStamp ts;
+            public Messages.Text message;
 
 
-            public PostMessageResponse(Slack.Client client, dynamic Response)
+            public PostMessageResponse(Client client, dynamic Response)
             {
                 channel = Utility.TryGetProperty(Response, "channel");
-                ts = new Slack.TimeStamp(Utility.TryGetProperty(Response, "ts"));
-                message = new Slack.Messages.Text(client, Response.message);
+                ts = new TimeStamp(Utility.TryGetProperty(Response, "ts"));
+                message = new Messages.Text(client, Response.message);
             }
 
 

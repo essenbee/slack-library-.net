@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -13,16 +9,16 @@ namespace Slack
     {
         
 
-        private Slack.Client _client;
+        private Client _client;
 
 
-        public Chat(Slack.Client Client)
+        public Chat(Client Client)
         {
             _client = Client;
         }
 
 
-        public Boolean Delete(String channel, Slack.TimeStamp ts)
+        public Boolean Delete(String channel, TimeStamp ts)
         {
             //https://api.slack.com/methods/chat.delete
             dynamic Response;
@@ -101,7 +97,7 @@ namespace Slack
                 throw new Exception("Could not post chat message.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Chat.PostMessageResponse(_client, Response);
+            return new Chat.PostMessageResponse(_client, Response);
         }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 
-namespace Slack.Channels
+namespace SlackLibCore.Channels
 {
 
 
@@ -14,16 +14,16 @@ namespace Slack.Channels
     {
 
 
-        private Slack.Client _client;
+        private Client _client;
 
 
-        public Collection(Slack.Client Client)
+        public Collection(Client Client)
         {
             _client = Client;
         }
 
 
-        public Slack.Channels.ListResponse List()
+        public ListResponse List()
         {
             //https://api.slack.com/methods/channels.list
             dynamic Response;
@@ -37,11 +37,11 @@ namespace Slack.Channels
                 throw new Exception("Could not list channels.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.ListResponse(_client.MetaData, Response);
+            return new ListResponse(_client.MetaData, Response);
         }
 
 
-        public Slack.Channels.ArchiveResponse Archive(String name)
+        public ArchiveResponse Archive(String name)
         {
             //https://api.slack.com/methods/channels.archive
             dynamic Response;
@@ -55,11 +55,11 @@ namespace Slack.Channels
                 throw new Exception("Could not archive channels.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.ArchiveResponse();
+            return new ArchiveResponse();
         }
 
 
-        public Slack.Channels.CreateResponse Create(String name)
+        public CreateResponse Create(String name)
         {
             //https://api.slack.com/methods/channels.create
             dynamic Response;
@@ -73,11 +73,11 @@ namespace Slack.Channels
                 throw new Exception("Could not create channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.CreateResponse(Response);
+            return new CreateResponse(Response);
         }
 
 
-        public Slack.Channels.HistoryResponse History(Slack.Channels.HistoryRequestArgs args)
+        public HistoryResponse History(HistoryRequestArgs args)
         {
             //https://api.slack.com/methods/channels.history
             dynamic Response;
@@ -99,11 +99,11 @@ namespace Slack.Channels
                 throw new Exception("Could not create channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.HistoryResponse(_client, args, Response);
+            return new HistoryResponse(_client, args, Response);
         }
 
 
-        public Slack.Channels.InfoResponse Info(String id)
+        public InfoResponse Info(String id)
         {
             //https://api.slack.com/methods/channels.info
             dynamic Response;
@@ -117,11 +117,11 @@ namespace Slack.Channels
                 throw new Exception("Could not get channel info.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.InfoResponse(Response);
+            return new InfoResponse(Response);
         }
 
 
-        public Slack.Channels.InviteResponse Invite(String channelID, String userID)
+        public InviteResponse Invite(String channelID, String userID)
         {
             //https://api.slack.com/methods/channels.invite
             dynamic Response;
@@ -135,11 +135,11 @@ namespace Slack.Channels
                 throw new Exception("Could not invite user to channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.InviteResponse(Response);
+            return new InviteResponse(Response);
         }
 
 
-        public Slack.Channels.KickResponse Kick(String channelID, String userID)
+        public KickResponse Kick(String channelID, String userID)
         {
             //https://api.slack.com/methods/channels.kick
             dynamic Response;
@@ -153,11 +153,11 @@ namespace Slack.Channels
                 throw new Exception("Could not kick user channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.KickResponse();
+            return new KickResponse();
         }
 
 
-        public Slack.Channels.LeaveResponse Leave(String channelID)
+        public LeaveResponse Leave(String channelID)
         {
             //https://api.slack.com/methods/channels.leave
             dynamic Response;
@@ -171,11 +171,11 @@ namespace Slack.Channels
                 throw new Exception("Could not leave channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.LeaveResponse();
+            return new LeaveResponse();
         }
 
 
-        public Slack.Channels.JoinResponse Join(String name)
+        public JoinResponse Join(String name)
         {
             //https://api.slack.com/methods/channels.join
             dynamic Response;
@@ -189,11 +189,11 @@ namespace Slack.Channels
                 throw new Exception("Could not perform auth test.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.JoinResponse(Response);
+            return new JoinResponse(Response);
         }
 
 
-        public Slack.Channels.MarkResponse Mark(String channelID, TimeStamp ts)
+        public MarkResponse Mark(String channelID, TimeStamp ts)
         {
             //https://api.slack.com/methods/channels.mark
             dynamic Response;
@@ -207,11 +207,11 @@ namespace Slack.Channels
                 throw new Exception("Could not mark channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.MarkResponse();
+            return new MarkResponse();
         }
 
 
-        public Slack.Channels.RenameResponse Rename(String channelID, String newName)
+        public RenameResponse Rename(String channelID, String newName)
         {
             //https://api.slack.com/methods/channels.rename
             dynamic Response;
@@ -225,11 +225,11 @@ namespace Slack.Channels
                 throw new Exception("Could not rename channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.RenameResponse(Response);
+            return new RenameResponse(Response);
         }
 
 
-        public Slack.Channels.SetPurposeResponse SetPurpose(String channelID, String newPurpose)
+        public SetPurposeResponse SetPurpose(String channelID, String newPurpose)
         {
             //https://api.slack.com/methods/channels.setPurpose
             dynamic Response;
@@ -243,11 +243,11 @@ namespace Slack.Channels
                 throw new Exception("Could not rename channel.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.SetPurposeResponse(Response);
+            return new SetPurposeResponse(Response);
         }
 
 
-        public Slack.Channels.SetTopicResponse SetTopic(String channelID, String newTopic)
+        public SetTopicResponse SetTopic(String channelID, String newTopic)
         {
             //https://api.slack.com/methods/channels.setTopic
             dynamic Response;
@@ -261,11 +261,11 @@ namespace Slack.Channels
                 throw new Exception("Could not set channel topic.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.SetTopicResponse(Response);
+            return new SetTopicResponse(Response);
         }
 
 
-        public Slack.Channels.UnarchiveResponse Unarchive(String id)
+        public UnarchiveResponse Unarchive(String id)
         {
             //https://api.slack.com/methods/channels.archive
             dynamic Response;
@@ -279,7 +279,7 @@ namespace Slack.Channels
                 throw new Exception("Could not unarchive channels.", ex);
             }
             _client.CheckForError(Response);
-            return new Slack.Channels.UnarchiveResponse();
+            return new UnarchiveResponse();
         }
 
 

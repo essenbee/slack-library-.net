@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using Microsoft.CSharp.RuntimeBinder;
 
-namespace Slack
+namespace SlackLibCore
 {
     public partial class RTM
     {
         public class MetaData
         {
             public List<bot> bots;
-            public Slack.TimeStamp cache_ts;
+            public TimeStamp cache_ts;
             public string cache_ts_version;
             public String cache_version;
             public List<channel> channels;
             public dnd dnd;
             public List<dynamic> groups;
             public List<ims> ims;
-            public Slack.TimeStamp latest_event_ts;
+            public TimeStamp latest_event_ts;
             public Boolean ok;
             public self self;
             public team team;
@@ -25,7 +25,7 @@ namespace Slack
 
             public MetaData(dynamic Message)
             {
-                this.cache_ts = new Slack.TimeStamp((Int32)Utility.TryGetProperty(Message, "cache_ts", 0));
+                this.cache_ts = new TimeStamp((Int32)Utility.TryGetProperty(Message, "cache_ts", 0));
                 this.bots = new List<RTM.bot>();
                 if (Utility.HasProperty(Message, "bots"))
                 {
@@ -52,7 +52,7 @@ namespace Slack
 
                         try
                         {
-                            rtmChannel.created = new Slack.TimeStamp(ts);
+                            rtmChannel.created = new TimeStamp(ts);
                         }
                         catch (RuntimeBinderException)
                         {
@@ -74,19 +74,19 @@ namespace Slack
                 if (Utility.HasProperty(Message, "dnd"))
                 {
                     this.dnd.dnd_enabled = Utility.TryGetProperty(Message.dnd, "dnd_enabled", false);
-                    this.dnd.next_dnd_end_ts = new Slack.TimeStamp(Utility.TryGetProperty(Message.dnd, "next_dnd_end_ts", "0"));
-                    this.dnd.next_dnd_start_ts = new Slack.TimeStamp(Utility.TryGetProperty(Message.dnd, "next_dnd_start_ts", "0"));
+                    this.dnd.next_dnd_end_ts = new TimeStamp(Utility.TryGetProperty(Message.dnd, "next_dnd_end_ts", "0"));
+                    this.dnd.next_dnd_start_ts = new TimeStamp(Utility.TryGetProperty(Message.dnd, "next_dnd_start_ts", "0"));
                     this.dnd.snooze_enabled = Utility.TryGetProperty(Message.dnd, "snooze_enabled", true);
                 }
                 this.groups = new List<dynamic>();
-                this.ims = new List<RTM.ims>();
+                this.ims = new List<ims>();
                 if (Utility.HasProperty(Message, "ims"))
                 {
-                    RTM.ims rtmIMS;
+                    ims rtmIMS;
                     foreach (dynamic ims in Message.ims)
                     {
-                        rtmIMS = new RTM.ims(this);
-                        rtmIMS.created = new Slack.TimeStamp(Utility.TryGetProperty(ims, "created", "0"));
+                        rtmIMS = new ims(this);
+                        rtmIMS.created = new TimeStamp(Utility.TryGetProperty(ims, "created", "0"));
                         rtmIMS.has_pins = Utility.TryGetProperty(ims, "has_pins", false);
                         rtmIMS.id = Utility.TryGetProperty(ims, "id", "");
                         rtmIMS.is_im = Utility.TryGetProperty(ims, "is_im", false);
@@ -98,12 +98,12 @@ namespace Slack
                         this.ims.Add(rtmIMS);
                     }
                 }
-                this.latest_event_ts = new Slack.TimeStamp(Utility.TryGetProperty(Message, "latest_event_ts", "0"));
+                this.latest_event_ts = new TimeStamp(Utility.TryGetProperty(Message, "latest_event_ts", "0"));
                 this.ok = Utility.TryGetProperty(Message, "ok", false);
                 this.self = new RTM.self();
                 if (Utility.HasProperty(Message, "self"))
                 {
-                    this.self.created = new Slack.TimeStamp(Utility.TryGetProperty(Message.self, "created", 0));
+                    this.self.created = new TimeStamp(Utility.TryGetProperty(Message.self, "created", 0));
                     this.self.id = Utility.TryGetProperty(Message.self, "id");
                     this.self.manual_presence = Utility.TryGetProperty(Message.self, "manual_presence");
                     this.self.name = Utility.TryGetProperty(Message.self, "name");

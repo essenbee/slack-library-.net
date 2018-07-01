@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -15,13 +11,13 @@ namespace Slack
         //https://api.slack.com/events/dnd_updated_user
 
 
-        private Slack.Client _client;
+        private Client _client;
 
         private String _user;
         private DoNotDisturbUserStatus _dnd_status;
 
 
-        public DoNotDisturbUpdatedUserEventArgs(Slack.Client Client,dynamic Data)
+        public DoNotDisturbUpdatedUserEventArgs(Client Client,dynamic Data)
         {
             _client = Client;
             _dnd_status = new DoNotDisturbUserStatus(Data.dnd_status);

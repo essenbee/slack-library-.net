@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Slack
+namespace SlackLibCore
 {
 	public partial class Exceptions
 	{

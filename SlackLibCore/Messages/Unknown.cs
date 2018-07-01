@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Slack.Messages
+namespace SlackLibCore.Messages
 {
 
 
@@ -13,13 +9,13 @@ namespace Slack.Messages
 
 
         private String _type;
-        private Slack.TimeStamp _ts;
+        private TimeStamp _ts;
 
 
         public Unknown(dynamic Data)
         {
             _type = Data.type;
-            _ts = new Slack.TimeStamp((String)Data.message.ts);
+            _ts = new TimeStamp((String)Data.message.ts);
         }
 
 
@@ -32,7 +28,7 @@ namespace Slack.Messages
         }
 
 
-        public Slack.TimeStamp ts
+        public TimeStamp ts
         {
             get
             {

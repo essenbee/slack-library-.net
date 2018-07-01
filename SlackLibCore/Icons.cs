@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Slack
+namespace SlackLibCore
 {
 
 

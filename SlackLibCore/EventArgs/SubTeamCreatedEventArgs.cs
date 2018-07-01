@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Slack
+﻿namespace SlackLibCore
 {
 
 
@@ -15,7 +9,7 @@ namespace Slack
     {
 
 
-        private Slack.SubTeam _subteam;
+        private SubTeam _subteam;
 
 
         public SubTeamCreatedEventArgs(dynamic Data)
@@ -24,7 +18,7 @@ namespace Slack
         }
 
 
-        public Slack.SubTeam subteam
+        public SubTeam subteam
         {
             get
             {

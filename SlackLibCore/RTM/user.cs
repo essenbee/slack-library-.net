@@ -1,37 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Slack
+namespace SlackLibCore
 {
     public partial class RTM
     {
-
-
         public class user
         {
-            public String color;
-            public Boolean deleted;
-            public String id;
-            public Boolean is_admin;
-            public Boolean is_bot;
-            public Boolean is_owner;
-            public Boolean is_primary_owner;
-            public Boolean is_restrictred;
-            public Boolean is_ultra_restricted;
-            public String name;
-            public String presence;
-            public Dictionary<String, String> profile;
-            public String real_name;
-            public String team_id;
-            public String tz;
-            public String tz_label;
-            public Int32 tz_offset;
+            public string color;
+            public bool deleted;
+            public string id;
+            public bool is_admin;
+            public bool is_bot;
+            public bool is_owner;
+            public bool is_primary_owner;
+            public bool is_restrictred;
+            public bool is_ultra_restricted;
+            public string name;
+            public string presence;
+            public Dictionary<string, string> profile;
+            public string real_name;
+            public string team_id;
+            public string tz;
+            public string tz_label;
+            public int tz_offset;
 
         }
-
-
     }
 }

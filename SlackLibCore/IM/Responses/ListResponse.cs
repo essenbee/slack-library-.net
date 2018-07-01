@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace Slack
+namespace SlackLibCore
 {
     public partial class IM
     {
@@ -21,16 +17,16 @@ namespace Slack
             {
 
 
-                private Slack.Client _client;
+                private Client _client;
 
                 public String id;
                 public Boolean is_im;
                 public String user;
-                public Slack.TimeStamp created;
+                public TimeStamp created;
                 public Boolean is_user_deleted;
 
 
-                public IM(Slack.Client client)
+                public IM(Client client)
                 {
                     _client = client;
                 }
@@ -62,7 +58,7 @@ namespace Slack
             public List<IM> ims;
 
 
-            public ListResponse(Slack.Client client, dynamic Response)
+            public ListResponse(Client client, dynamic Response)
             {
                 ims = new List<IM>();
                 if (!Utility.HasProperty(Response, "ims"))

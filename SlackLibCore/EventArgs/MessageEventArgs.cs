@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Slack
+namespace SlackLibCore
 {
 
 
@@ -15,22 +15,22 @@ namespace Slack
         //https://api.slack.com/events/message
 
 
-        private Slack.Client _client;
+        private Client _client;
 
         private String _channel;
         private String _user;
         private String _text;
-        private Slack.TimeStamp _ts;
+        private TimeStamp _ts;
         private String _team;
 
 
-        public MessageEventArgs(Slack.Client Client, dynamic Data)
+        public MessageEventArgs(Client Client, dynamic Data)
         {
             _client = Client;
             _channel = Data.channel;
             _user = Data.user;
             _text = Data.text;
-            _ts = new Slack.TimeStamp((String) Data.ts);
+            _ts = new TimeStamp((String) Data.ts);
             _team = Data.team;
         }
 
@@ -62,7 +62,7 @@ namespace Slack
         }
 
 
-        public Slack.TimeStamp ts
+        public TimeStamp ts
         {
             get
             {
@@ -96,11 +96,11 @@ namespace Slack
         }
 
 
-        public RTM.ims IMSInfo
+        public ims IMSInfo
         {
             get
             {
-                foreach (RTM.ims ims in _client.MetaData.ims)
+                foreach (ims ims in _client.MetaData.ims)
                 {
                     if (ims.id == _channel)
                     {
