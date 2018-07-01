@@ -1,4 +1,6 @@
-﻿namespace SlackLibCore
+﻿using Newtonsoft.Json;
+
+namespace SlackLibCore
 {
     public class PongEventArgs
     {
@@ -6,7 +8,7 @@
 
         public PongEventArgs(dynamic Data)
         {
-            Reply = Data;
+            Reply = JsonConvert.SerializeObject(Data);
         }
     }
 }
