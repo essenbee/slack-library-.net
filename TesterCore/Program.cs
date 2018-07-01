@@ -142,6 +142,8 @@ namespace TesterCore
             var text = e?.text ?? "<< none >>";
 
             Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tMessage.\t\t[{user}] [{text}]");
+
+            Process_Message(user, e.channel, text);
         }
 
         private static void client_MessageEdit(MessageEditEventArgs e)
@@ -190,7 +192,7 @@ namespace TesterCore
                 case "news":
                     args.text = "";
                     System.Net.WebClient wcReutersTechNews = new System.Net.WebClient();
-                    String strReutersTechNewsXML = wcReutersTechNews.DownloadString("http://feeds.reuters.com/reuters/technologyNews");
+                    String strReutersTechNewsXML = wcReutersTechNews.DownloadString("http://feeds.skynews.com/feeds/rss/technology");
                     System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
                     xmlDoc.LoadXml(strReutersTechNewsXML);
                     Int32 intReutersTechNewsRemaining = MAX_NEWS_ITEMS;
