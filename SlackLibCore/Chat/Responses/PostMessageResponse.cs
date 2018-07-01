@@ -1,22 +1,14 @@
-﻿using System;
-
-namespace SlackLibCore
+﻿namespace SlackLibCore
 {
     public partial class Chat
     {
-
-
         //https://api.slack.com/methods/chat.postMessage
-
 
         public class PostMessageResponse
         {
-
-
-            public String channel;
+            public string channel;
             public TimeStamp ts;
             public Messages.Text message;
-
 
             public PostMessageResponse(Client client, dynamic Response)
             {
@@ -24,10 +16,6 @@ namespace SlackLibCore
                 ts = new TimeStamp(Utility.TryGetProperty(Response, "ts"));
                 message = new Messages.Text(client, Response.message);
             }
-
-
         }
-
-
     }
 }

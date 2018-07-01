@@ -4,19 +4,13 @@ namespace SlackLibCore
 {
     public partial class Chat
     {
-
-
         //https://api.slack.com/methods/chat.update
-
 
         public class UpdateMessageResponse
         {
-
-
-            public String channel;
+            public string channel;
             public TimeStamp ts;
-            public String text;
-
+            public string text;
 
             public UpdateMessageResponse(dynamic Response)
             {
@@ -24,10 +18,6 @@ namespace SlackLibCore
                 ts = new TimeStamp(Utility.TryGetProperty(Response, "ts"));
                 text = Utility.TryGetProperty(Response, "text");
             }
-
-
         }
-
-
     }
 }
