@@ -2,13 +2,16 @@
 
 namespace SlackLibCore
 {
-
-
     //https://api.slack.com/methods/auth.test
-
 
     public class AuthTestResponse
     {
+        public string team { get; }
+        public string team_id { get; }
+        public string url { get; }
+        public string user { get; }
+        public string user_id { get; }
+
         public AuthTestResponse(dynamic Response)
         {
             team = Response.team;
@@ -17,22 +20,5 @@ namespace SlackLibCore
             user = Response.user;
             user_id = Response.user_id;
         }
-
-
-        public String team { get; }
-
-
-        public String team_id { get; }
-
-
-        public String url { get; }
-
-
-        public String user { get; }
-
-
-        public String user_id { get; }
     }
-
-
 }

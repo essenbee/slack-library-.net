@@ -6,13 +6,13 @@ namespace SlackLibCore
     
     public class FileObject
     {
-        public class reaction
+        public class Reaction
         {
-            public String name { get; }
-            public Int32 count { get; }
-            public String[] users { get; }
+            public string name { get; }
+            public int count { get; }
+            public string[] users { get; }
 
-            public reaction(dynamic Data)
+            public Reaction(dynamic Data)
             {
                 name = Data.name;
                 count = Data.count;
@@ -20,31 +20,20 @@ namespace SlackLibCore
             }
         }
         
-        public String _id;
+        public string _id;
+        public bool _editable;
+        public string id => _id;
+        public int created { get; }
+        public int timestamp { get; }       
+        public string name { get; }
+        public string title { get; }
+        public string mimetype { get; }
+        public string Filetype { get; }
+        public string pretty_type { get; }
+        public string user { get; }
+        public string mode { get; }
 
-        public Boolean _editable;
-               
-        public String id => _id;
-
-        public Int32 created { get; }
-
-        public Int32 timestamp { get; }
-        
-        public String name { get; }
-
-        public String title { get; }
-        
-        public String mimetype { get; }
-        
-        public String Filetype { get; }
-        
-        public String pretty_type { get; }
-        
-        public String user { get; }
-        
-        public String mode { get; }
-        
-        public Boolean editable
+        public bool editable
         {
             get
             {
@@ -52,59 +41,33 @@ namespace SlackLibCore
             }
         }
         
-        public Boolean is_external { get; }
-        
-        public String external_type { get; }
-
-        public Int32 size { get; }
-        
-        public String url_private { get; }
-        
-        public String url_private_download { get; }
-        
-        public String thumb_64 { get; }
-
-        public String thumb_80 { get; }
-
-        public String thumb_360 { get; }
-        
-        public String thumb_360_gif { get; }
-        
-        public Int32 thumb_360_w { get; }
-        
-        public Int32 thumb_360_h { get; }
-        
-        public String permalink { get; }
-        
-        public String edit_link { get; }
-        
-        public String preview { get; }
-        
-        public String preview_highlight { get; }
-        
-        public Int32 lines { get; }
-        
-        public Int32 lines_more { get; }
-        
-        public Boolean is_public { get; }
-        
-        public Boolean public_url_shared { get; }
-        
-        public String[] channels { get; }
-        
-        public String[] groups { get; }
-        
-        public String[] ims { get; }
-        
-        public String initial_comment { get; }
-        
-        public Int32 num_stars { get; }
-        
-        public Boolean is_starred { get; }
-        
-        public String[] pinned_to { get; }
-        
-        public reaction[] reactions { get; }
+        public bool is_external { get; }
+        public string external_type { get; }
+        public int size { get; }
+        public string url_private { get; }
+        public string url_private_download { get; }
+        public string thumb_64 { get; }
+        public string thumb_80 { get; }
+        public string thumb_360 { get; }
+        public string thumb_360_gif { get; }
+        public int thumb_360_w { get; }
+        public int thumb_360_h { get; }
+        public string permalink { get; }
+        public string edit_link { get; }
+        public string preview { get; }
+        public string preview_highlight { get; } 
+        public int lines { get; } 
+        public int lines_more { get; }
+        public bool is_public { get; }
+        public bool public_url_shared { get; }
+        public string[] channels { get; }
+        public string[] groups { get; }
+        public string[] ims { get; }
+        public string initial_comment { get; }
+        public int num_stars { get; }
+        public bool is_starred { get; }
+        public string[] pinned_to { get; }
+        public Reaction[] reactions { get; }
 
         public FileObject(dynamic Data)
         {
@@ -155,11 +118,11 @@ namespace SlackLibCore
 
             if (numReactions > 0)
             {
-                reactions = new reaction[Data.reactions.length];
+                reactions = new Reaction[Data.reactions.length];
 
                 for (var intCounter = 0; intCounter < Data.reactions.length; intCounter++)
                 {
-                    reactions[intCounter] = new reaction(Data.reactions[intCounter]);
+                    reactions[intCounter] = new Reaction(Data.reactions[intCounter]);
                 }
             }
         }

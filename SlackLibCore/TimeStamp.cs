@@ -4,8 +4,11 @@ namespace SlackLibCore
 {
     public class TimeStamp
     {
+        public DateTime Date { get; set; }
+        public int Order => intOrder;
+
         public static DateTime MinValue = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-        private Int32 intOrder;
+        private int intOrder;
         
         public TimeStamp(DateTime date)
         {
@@ -14,7 +17,7 @@ namespace SlackLibCore
             {
                 date = MinValue;
             }
-            this.Date = date;
+            Date = date;
         }
 
         public TimeStamp(Double unixTimeStamp)
@@ -42,10 +45,11 @@ namespace SlackLibCore
                 case String s:
                     var strTime = s;
                     intOrder = 0;
+
                     if (s.Contains("."))
                     {
                         strTime = s.Substring(0, s.IndexOf("."));
-                        String strOrder = s.Substring(s.IndexOf(".") + 1);
+                        var strOrder = s.Substring(s.IndexOf(".") + 1);
                         Int32.TryParse(strOrder, out intOrder);
                     }
 
@@ -55,15 +59,15 @@ namespace SlackLibCore
             }
         }
 
-
         public TimeStamp(string timeStamp)
         {
             var strTime = timeStamp;
             intOrder = 0;
+
             if (timeStamp.Contains("."))
             {
                 strTime = timeStamp.Substring(0, timeStamp.IndexOf("."));
-                String strOrder = timeStamp.Substring(timeStamp.IndexOf(".") + 1);
+                var strOrder = timeStamp.Substring(timeStamp.IndexOf(".") + 1);
                 Int32.TryParse(strOrder, out intOrder);
             }
 
@@ -71,23 +75,16 @@ namespace SlackLibCore
             Date = MinValue.AddSeconds(dblTimeStamp).ToLocalTime();
         }
         
-
         public override string ToString()
         {
             DateTime dtUTC = Date.ToUniversalTime();
             Double dblSeconds = dtUTC.Subtract(MinValue).TotalSeconds;
+
             if (intOrder > 0)
             {
                 return dblSeconds.ToString() + "." + intOrder.ToString();
             }
             return dblSeconds.ToString();
         }
-        
-        public DateTime Date { get; set; }
-
-
-        public Int32 Order => intOrder;
     }
-
-
 }

@@ -4,17 +4,12 @@ using Newtonsoft.Json.Linq;
 
 namespace SlackLibCore
 {
-
-
     public class Utility
     {
-
-
         public static dynamic TryGetProperty(dynamic dynamicObject, string propertyName)
         {
             return TryGetProperty(dynamicObject, propertyName, "");
         }
-
 
         public static dynamic TryGetProperty(dynamic dynamicObject, string propertyName, dynamic Default)
         {
@@ -47,7 +42,6 @@ namespace SlackLibCore
             }
         }
 
-
         public static dynamic HasProperty(dynamic dynamicObject, string propertyName)
         {
             try
@@ -72,9 +66,5 @@ namespace SlackLibCore
                 throw new Exception($"HasProperty(): Could not determine if dynamic object has property {propertyName}", ex);
             }
         }
-
-
     }
-
-
 }
