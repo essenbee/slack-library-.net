@@ -102,9 +102,9 @@ namespace SlackLibCore
 
         private WebSocket webSocket;
         private Thread clientThread = null;
-        
+
         #region Public Events
-        
+
         public event ServiceConnectedEventHandler ServiceConnected = null;
         public event ServiceConnectionFailedEventHandler ServiceConnectionFailed = null;
         public event ServiceDisconnectedEventHandler ServiceDisconnected = null;
@@ -193,12 +193,12 @@ namespace SlackLibCore
             DND = new DND(this);
             IM = new IM(this);
         }
-        
+
         public void Dispose()
         {
             Disconnect();
         }
-        
+
         public void RefreshUsers()
         {
             try
@@ -210,7 +210,7 @@ namespace SlackLibCore
                 throw new Exceptions.UnknownErrorException();
             }
         }
-        
+
         private void _refreshRTMMetaData()
         {
             try
@@ -225,7 +225,7 @@ namespace SlackLibCore
                 throw new Exceptions.ServiceDisconnectedException(ex);
             }
         }
-        
+
         private string _downloadConnectionInfo()
         {
             try
@@ -245,7 +245,7 @@ namespace SlackLibCore
                 throw new Exception("Could not get connection info.", ex);
             }
         }
-        
+
         public void Connect()
         {
             //run client on it's own thread
@@ -264,7 +264,7 @@ namespace SlackLibCore
             clientThread = new Thread(_connect);
             clientThread.Start();
         }
-        
+
         private void _connect()
         {
             try
@@ -307,12 +307,12 @@ namespace SlackLibCore
                 Console.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
             }
         }
-     
+
         public void Disconnect()
         {
             _disconnect();
         }
-        
+
         private void _disconnect()
         {
             try
@@ -356,7 +356,7 @@ namespace SlackLibCore
                 throw new Exception("Could not submit api request.", ex);
             }
         }
-        
+
         public Boolean APITest()
         {
             try
@@ -370,7 +370,7 @@ namespace SlackLibCore
                 throw new Exception("Could not perform API test.", ex);
             }
         }
-        
+
         public AuthTestResponse AuthTest()
         {
             //https://api.slack.com/methods/api.test
@@ -387,16 +387,16 @@ namespace SlackLibCore
             CheckForError(Response);
             return new AuthTestResponse(Response);
         }
-        
+
         public void CheckForError(dynamic Response)
         {
             if (!Utility.HasProperty(Response, "ok"))
-            {   
+            {
                 //no "ok" property.....that should probably be an exception too??
                 return;
             }
 
-            var okay = (bool) Utility.TryGetProperty(Response, "ok", false);
+            var okay = (bool)Utility.TryGetProperty(Response, "ok", false);
 
             if (okay)
             {
@@ -695,6 +695,15 @@ namespace SlackLibCore
                             case "message":
                                 if (Data.previous_message == null)
                                 {
+                                    // Commands
+                                    string text = Utility.TryGetProperty(Data, "text", string.Empty);
+                                    if (text.StartsWith("!"))
+                                    {
+                                        text = text.ToLower();
+
+                                        Console.WriteLine($"Command detected: {Data.text}");
+                                    }
+
                                     MessageEventArgs messagEventArgs = new MessageEventArgs(this, Data);
                                     Message?.Invoke(messagEventArgs);
                                 }
