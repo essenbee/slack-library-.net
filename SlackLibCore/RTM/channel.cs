@@ -5,7 +5,7 @@ namespace SlackLibCore
 {
     public partial class RTM
     {
-        public class channel
+        public class Channel
         {
             public struct TopicInfo
             {
@@ -32,16 +32,16 @@ namespace SlackLibCore
             public Int32 unread_count;
             public Int32 unread_count_display;
 
-            public channel()
+            public Channel()
             {
             }
 
-            public channel(MetaData MetaData)
+            public Channel(MetaData MetaData)
             {
                 _metaData = MetaData;
             }
 
-            public channel(dynamic data)
+            public Channel(dynamic data)
             {
                 id = Utility.TryGetProperty(data, "id");
                 name = Utility.TryGetProperty(data, "name");
@@ -79,7 +79,7 @@ namespace SlackLibCore
                 unread_count_display = Utility.TryGetProperty(data, "unread_count_display", 0);
             }
 
-            public RTM.user CreatorUserInfo
+            public RTM.User CreatorUserInfo
             {
                 get
                 {
@@ -87,7 +87,7 @@ namespace SlackLibCore
                     {
                         return null;
                     }
-                    foreach (RTM.user user in _metaData.users)
+                    foreach (RTM.User user in _metaData.users)
                     {
                         if (user.id == creator)
                         {

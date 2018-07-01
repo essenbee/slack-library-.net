@@ -16,18 +16,18 @@ namespace SlackLibCore.Channels
     {
 
 
-        private List<RTM.channel> _channels;
+        private List<RTM.Channel> _channels;
 
 
         public ListResponse(RTM.MetaData MetaData, dynamic Response)
         {
-            _channels = new List<RTM.channel>();
+            _channels = new List<RTM.Channel>();
             if (Utility.HasProperty(Response, "channels"))
             {
-                RTM.channel rtmChannel;
+                RTM.Channel rtmChannel;
                 foreach (dynamic channel in Response.channels)
                 {
-                    rtmChannel = new RTM.channel(MetaData);
+                    rtmChannel = new RTM.Channel(MetaData);
                     rtmChannel.id = Utility.TryGetProperty(channel, "id");
                     rtmChannel.name = Utility.TryGetProperty(channel, "name");
                     rtmChannel.created = new TimeStamp(Utility.TryGetProperty(channel, "created", 0));
@@ -40,7 +40,7 @@ namespace SlackLibCore.Channels
         }
 
 
-        public List<RTM.channel> channels
+        public List<RTM.Channel> channels
         {
             get
             {

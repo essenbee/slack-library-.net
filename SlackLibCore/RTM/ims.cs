@@ -1,6 +1,6 @@
 ﻿namespace SlackLibCore
 {
-    public class ims
+    public class Ims
     {
         private RTM.MetaData _metaData;
 
@@ -14,7 +14,7 @@
         public int unread_count_display;
         public string user;
 
-        public ims(RTM.MetaData MetaData)
+        public Ims(RTM.MetaData MetaData)
         {
             _metaData = MetaData;
         }
@@ -27,11 +27,11 @@
             }
         }
 
-        public RTM.user UserInfo
+        public RTM.User UserInfo
         {
             get
             {
-                foreach (RTM.user userItem in _metaData.users)
+                foreach (RTM.User userItem in _metaData.users)
                 {
                     if (userItem.id == user)
                     {

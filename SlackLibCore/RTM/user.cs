@@ -4,7 +4,7 @@ namespace SlackLibCore
 {
     public partial class RTM
     {
-        public class user
+        public class User
         {
             public string color;
             public bool deleted;

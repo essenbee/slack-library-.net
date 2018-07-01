@@ -8,31 +8,31 @@ namespace SlackLibCore
     {
         public class MetaData
         {
-            public List<bot> bots;
+            public List<Bot> bots;
             public TimeStamp cache_ts;
             public string cache_ts_version;
             public String cache_version;
-            public List<channel> channels;
-            public dnd dnd;
+            public List<Channel> channels;
+            public Dnd dnd;
             public List<dynamic> groups;
-            public List<ims> ims;
+            public List<Ims> ims;
             public TimeStamp latest_event_ts;
             public Boolean ok;
-            public self self;
-            public team team;
+            public Self self;
+            public Team team;
             public String url;
-            public List<user> users;
+            public List<User> users;
 
             public MetaData(dynamic Message)
             {
                 this.cache_ts = new TimeStamp((Int32)Utility.TryGetProperty(Message, "cache_ts", 0));
-                this.bots = new List<RTM.bot>();
+                this.bots = new List<RTM.Bot>();
                 if (Utility.HasProperty(Message, "bots"))
                 {
-                    RTM.bot rtmBot;
+                    RTM.Bot rtmBot;
                     foreach (dynamic bot in Message.bots)
                     {
-                        rtmBot = new RTM.bot();
+                        rtmBot = new RTM.Bot();
                         rtmBot.deleted = Utility.TryGetProperty(bot, "deleted", false);
                         rtmBot.id = Utility.TryGetProperty(bot, "id", "");
                         rtmBot.name = Utility.TryGetProperty(bot, "name", "");
@@ -41,13 +41,13 @@ namespace SlackLibCore
                 }
                 this.cache_ts_version = Utility.TryGetProperty(Message, "cache_ts_version");
                 this.cache_version = Message.cache_version;
-                this.channels = new List<RTM.channel>();
+                this.channels = new List<RTM.Channel>();
                 if (Utility.HasProperty(Message, "channels"))
                 {
-                    RTM.channel rtmChannel;
+                    RTM.Channel rtmChannel;
                     foreach (dynamic channel in Message.channels)
                     {
-                        rtmChannel = new RTM.channel(this);
+                        rtmChannel = new RTM.Channel(this);
                         var ts = channel.created;
 
                         try
@@ -70,7 +70,7 @@ namespace SlackLibCore
                         this.channels.Add(rtmChannel);
                     }
                 }
-                this.dnd = new RTM.dnd();
+                this.dnd = new RTM.Dnd();
                 if (Utility.HasProperty(Message, "dnd"))
                 {
                     this.dnd.dnd_enabled = Utility.TryGetProperty(Message.dnd, "dnd_enabled", false);
@@ -79,13 +79,13 @@ namespace SlackLibCore
                     this.dnd.snooze_enabled = Utility.TryGetProperty(Message.dnd, "snooze_enabled", true);
                 }
                 this.groups = new List<dynamic>();
-                this.ims = new List<ims>();
+                this.ims = new List<Ims>();
                 if (Utility.HasProperty(Message, "ims"))
                 {
-                    ims rtmIMS;
+                    Ims rtmIMS;
                     foreach (dynamic ims in Message.ims)
                     {
-                        rtmIMS = new ims(this);
+                        rtmIMS = new Ims(this);
                         rtmIMS.created = new TimeStamp(Utility.TryGetProperty(ims, "created", "0"));
                         rtmIMS.has_pins = Utility.TryGetProperty(ims, "has_pins", false);
                         rtmIMS.id = Utility.TryGetProperty(ims, "id", "");
@@ -100,7 +100,7 @@ namespace SlackLibCore
                 }
                 this.latest_event_ts = new TimeStamp(Utility.TryGetProperty(Message, "latest_event_ts", "0"));
                 this.ok = Utility.TryGetProperty(Message, "ok", false);
-                this.self = new RTM.self();
+                this.self = new RTM.Self();
                 if (Utility.HasProperty(Message, "self"))
                 {
                     this.self.created = new TimeStamp(Utility.TryGetProperty(Message.self, "created", 0));
@@ -109,12 +109,12 @@ namespace SlackLibCore
                     this.self.name = Utility.TryGetProperty(Message.self, "name");
                     this.self.prefs = new System.Dynamic.ExpandoObject();
                 }
-                this.team = new RTM.team();
+                this.team = new RTM.Team();
                 if (Utility.HasProperty(Message, "team"))
                 {
                     this.team.domain = Utility.TryGetProperty(Message.team, "domain");
                     this.team.email_domain = Utility.TryGetProperty(Message.team, "email_domain");
-                    this.team.icon = new RTM.icon();
+                    this.team.icon = new RTM.Icon();
                     if (Utility.HasProperty(Message.team, "icon"))
                     {
                         this.team.icon.image_102 = Utility.TryGetProperty(Message.team.icon, "image_102");
@@ -127,13 +127,13 @@ namespace SlackLibCore
                     }
                 }
                 this.url = Message.url;
-                this.users = new List<RTM.user>();
+                this.users = new List<RTM.User>();
                 if (Utility.HasProperty(Message, "users"))
                 {
-                    RTM.user rtmUser;
+                    RTM.User rtmUser;
                     foreach (dynamic user in Message.users)
                     {
-                        rtmUser = new RTM.user();
+                        rtmUser = new RTM.User();
                         rtmUser.color = Utility.TryGetProperty(user, "color");
                         rtmUser.deleted = Utility.TryGetProperty(user, "deleted", false);
                         rtmUser.id = Utility.TryGetProperty(user, "id");

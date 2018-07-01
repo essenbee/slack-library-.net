@@ -16,12 +16,12 @@ namespace SlackLibCore.Channels
     {
 
 
-        private RTM.channel _channel;
+        private RTM.Channel _channel;
 
 
         public JoinResponse(dynamic Response)
         {
-            _channel = new RTM.channel();
+            _channel = new RTM.Channel();
             _channel.id = Response.channel.id;
             _channel.name = Response.channel.name;
             _channel.created = Response.channel.created;
@@ -31,7 +31,7 @@ namespace SlackLibCore.Channels
         }
 
 
-        public RTM.channel channel
+        public RTM.Channel channel
         {
             get
             {

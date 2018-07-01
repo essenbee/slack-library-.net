@@ -5,11 +5,11 @@ namespace SlackLibCore
 {
     public partial class RTM
     {
-        public struct team
+        public struct Team
         {
             public string domain;
             public string email_domain;
-            public icon icon;
+            public Icon icon;
             public string id;
             public int msg_edit_window_mins;
             public string name;

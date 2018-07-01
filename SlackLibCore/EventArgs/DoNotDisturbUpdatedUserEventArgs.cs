@@ -43,11 +43,11 @@ namespace SlackLibCore
         }
 
 
-        public RTM.user UserInfo
+        public RTM.User UserInfo
         {
             get
             {
-                foreach (RTM.user userItem in _client.MetaData.users)
+                foreach (RTM.User userItem in _client.MetaData.users)
                 {
                     if (userItem.id == _user)
                     {

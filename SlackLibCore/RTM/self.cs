@@ -2,7 +2,7 @@
 {
     public partial class RTM
     {
-        public struct self
+        public struct Self
         {
             public TimeStamp created;
             public string id;

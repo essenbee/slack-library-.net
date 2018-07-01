@@ -4,7 +4,7 @@ namespace SlackLibCore
 {
     public partial class RTM
     {
-        public struct icon
+        public struct Icon
         {
             public string image_102;
             public string image_132;

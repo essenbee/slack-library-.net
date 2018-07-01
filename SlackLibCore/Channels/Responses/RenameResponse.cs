@@ -16,23 +16,23 @@ namespace SlackLibCore.Channels
     {
 
 
-        private RTM.channel _channel;
+        private RTM.Channel _channel;
 
 
         public RenameResponse(dynamic Response)
         {
             if (Utility.HasProperty(Response, "channel"))
             {
-                _channel = new RTM.channel(Response.channel);
+                _channel = new RTM.Channel(Response.channel);
             }
             else
             {
-                _channel = new RTM.channel();
+                _channel = new RTM.Channel();
             }
         }
 
 
-        public RTM.channel channel
+        public RTM.Channel channel
         {
             get
             {

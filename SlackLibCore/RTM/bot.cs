@@ -2,7 +2,7 @@
 {
     public partial class RTM
     {
-        public struct bot
+        public struct Bot
         {
             public bool deleted;
             public string id;

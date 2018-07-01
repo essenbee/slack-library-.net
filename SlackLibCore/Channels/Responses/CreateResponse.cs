@@ -15,12 +15,12 @@ namespace SlackLibCore.Channels
     {
 
 
-        private RTM.channel _channel;
+        private RTM.Channel _channel;
 
 
         public CreateResponse(dynamic Response)
         {
-            _channel = new RTM.channel();
+            _channel = new RTM.Channel();
             if (Utility.HasProperty(Response, "channel"))
             {
                 _channel.id = Utility.TryGetProperty(Response.channel, "id");
@@ -33,7 +33,7 @@ namespace SlackLibCore.Channels
         }
 
 
-        public RTM.channel channel
+        public RTM.Channel channel
         {
             get
             {

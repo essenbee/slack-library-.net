@@ -2,7 +2,7 @@
 {
     public partial class RTM
     {
-        public struct dnd
+        public struct Dnd
         {
             public bool dnd_enabled;
             public TimeStamp next_dnd_end_ts;

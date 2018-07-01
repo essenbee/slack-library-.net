@@ -103,11 +103,11 @@ namespace SlackLibCore
         }
 
 
-        public RTM.channel ChannelInfo
+        public RTM.Channel ChannelInfo
         {
             get
             {
-                foreach (RTM.channel channel in _client.MetaData.channels)
+                foreach (RTM.Channel channel in _client.MetaData.channels)
                 {
                     if (channel.id == _channel)
                     {
@@ -119,11 +119,11 @@ namespace SlackLibCore
         }
 
 
-        public ims IMSInfo
+        public Ims IMSInfo
         {
             get
             {
-                foreach (ims ims in _client.MetaData.ims)
+                foreach (Ims ims in _client.MetaData.ims)
                 {
                     if (ims.id == _channel)
                     {
@@ -135,11 +135,11 @@ namespace SlackLibCore
         }
 
 
-        public RTM.user UserInfo
+        public RTM.User UserInfo
         {
             get
             {
-                foreach (RTM.user user in _client.MetaData.users)
+                foreach (RTM.User user in _client.MetaData.users)
                 {
                     if (user.id == _previous_message.user)
                     {
