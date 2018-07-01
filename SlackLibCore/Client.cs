@@ -12,6 +12,8 @@ namespace SlackLibCore
     {
         #region Declerations
 
+        const string COMMAND_PREFIX = "!";
+
         public string APIKey { get; }
         public RTM.MetaData MetaData { get; private set; }
         public Channels.Collection Channels { get; }
@@ -697,7 +699,7 @@ namespace SlackLibCore
                                 {
                                     // Commands
                                     string text = Utility.TryGetProperty(Data, "text", string.Empty);
-                                    if (text.StartsWith("!"))
+                                    if (text.StartsWith(COMMAND_PREFIX))
                                     {
                                         text = text.ToLower();
 
