@@ -109,6 +109,8 @@ namespace TesterCore
         {
             var cmd = e?.Command ?? "<< none >>";
             var args = e?.ArgsAsString ?? string.Empty;
+            var channel = e?.Channel ?? string.Empty;
+            Console.WriteLine($">> Channel [{channel}] ...");
             Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tCommand.\t\t[{e.UserName}] invoked [{cmd}] with args [{args}]");
         }
 
