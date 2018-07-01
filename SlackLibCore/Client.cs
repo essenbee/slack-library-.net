@@ -29,6 +29,9 @@ namespace SlackLibCore
         public delegate void DataReceivedEventHandler(String data);
         public delegate void HelloEventHandler(HelloEventArgs e);
         public delegate void PongEventHandler(PongEventArgs e);
+
+        public delegate void CommandEventHandler(CommandEventArgs e);
+
         public delegate void AccountsChangedEventHandler(AccountsChangedEventArgs e);
         public delegate void BotAddedEventHandler(BotAddedEventArgs e);
         public delegate void BotChangedEventHandler(BotChangedEventArgs e);
@@ -114,6 +117,7 @@ namespace SlackLibCore
         public event DataReceivedEventHandler DataReceived = null;
         public event HelloEventHandler Hello = null;
         public event PongEventHandler Pong = null;
+        public event CommandEventHandler CommandReceived = null;
 
         public event AccountsChangedEventHandler AccountsChanged = null;
         public event BotAddedEventHandler BotAdded = null;
@@ -697,13 +701,15 @@ namespace SlackLibCore
                             case "message":
                                 if (Data.previous_message == null)
                                 {
-                                    // Commands
+                                    // Look out for ! commands ...
                                     string text = Utility.TryGetProperty(Data, "text", string.Empty);
+
                                     if (text.StartsWith(COMMAND_PREFIX))
                                     {
                                         text = text.ToLower();
-
-                                        Console.WriteLine($"Command detected: {Data.text}");
+                                        var commandEventArgs = new CommandEventArgs(this, text, Data);
+                                        CommandReceived?.Invoke(commandEventArgs);
+                                        //break;
                                     }
 
                                     MessageEventArgs messagEventArgs = new MessageEventArgs(this, Data);

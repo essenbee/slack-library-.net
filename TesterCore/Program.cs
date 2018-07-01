@@ -38,6 +38,9 @@ namespace TesterCore
             client.UserTyping += new Client.UserTypingEventHandler(client_UserTyping);
             client.Message += new Client.MessageEventHandler(client_Message);
             client.MesssageEdit += new Client.MessageEditEventHandler(client_MessageEdit);
+
+            client.CommandReceived += new Client.CommandEventHandler(client_ProcessCommand);
+
             client.DoNotDisturbUpdatedUser += new Client.DoNotDistrubUpdatedUserEventHandler(client_DoNotDisturbUpdatedUser);
 
             //connect to the slack service
@@ -100,6 +103,12 @@ namespace TesterCore
         private static void client_Hello(HelloEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "\tHello");
+        }
+
+        private static void client_ProcessCommand(CommandEventArgs e)
+        {
+            var fullCommand = e?.FullCommandText ?? "<< none >>";
+            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss}\tCommand.\t\t[{e.User}] invoked [{fullCommand}]");
         }
 
         private static void client_DoNotDisturbUpdatedUser(DoNotDisturbUpdatedUserEventArgs e)
