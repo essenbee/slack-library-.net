@@ -8,12 +8,12 @@ namespace SlackLibCore.Messages
         {
             public Edited(dynamic data)
             {
-                ts = data.ts;
-                user = data.user;
+                ts = data?.ts ?? string.Empty;
+                user = data?.user ?? string.Empty;
             }
 
-            public String user { get; }
-            public String ts { get; }
+            public string user { get; }
+            public string ts { get; }
         }
 
         public Message(dynamic data)
