@@ -699,27 +699,33 @@ namespace SlackLibCore
                                 ManualPresenceChange?.Invoke(manualPresenceChangeEventArgs);
                                 break;
                             case "message":
+                                string text = string.Empty;
                                 if (Data.previous_message == null)
                                 {
                                     // Look out for ! commands ...
-                                    string text = Utility.TryGetProperty(Data, "text", string.Empty);
-
-                                    if (text.StartsWith(COMMAND_PREFIX))
-                                    {
-                                        text = text.ToLower();
-                                        var commandEventArgs = new CommandEventArgs(this, text, Data);
-                                        CommandReceived?.Invoke(commandEventArgs);
-                                        //break;
-                                    }
-
+                                    text = Utility.TryGetProperty(Data, "text", string.Empty);
                                     MessageEventArgs messagEventArgs = new MessageEventArgs(this, Data);
                                     Message?.Invoke(messagEventArgs);
                                 }
                                 else
                                 {
+                                    if (Utility.HasProperty(Data, "message"))
+                                    {
+                                        // Look out for ! commands ...
+                                        text = Utility.TryGetProperty(Data.message, "text", string.Empty);
+                                    }
+
                                     MessageEditEventArgs messageEditEventArgs = new MessageEditEventArgs(this, Data);
                                     MesssageEdit?.Invoke(messageEditEventArgs);
                                 }
+
+                                if (text.StartsWith(COMMAND_PREFIX))
+                                {
+                                    text = text.ToLower();
+                                    var commandEventArgs = new CommandEventArgs(this, text, Data);
+                                    CommandReceived?.Invoke(commandEventArgs);
+                                }
+
                                 break;
                             case "pin_added":
                                 PinAddedEventArgs pinAddedEventArgs = new PinAddedEventArgs(Data);
