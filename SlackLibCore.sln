@@ -5,7 +5,12 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackLibCore", "SlackLibCore\SlackLibCore.csproj", "{F9EC6C81-37E4-4B47-A467-46689B724FAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesterCore", "TesterCore\TesterCore.csproj", "{F7735D1A-4CF5-4DDB-A3B8-DC2DD0C74C6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterCore", "TesterCore\TesterCore.csproj", "{F7735D1A-4CF5-4DDB-A3B8-DC2DD0C74C6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F2A8952-B64A-43B2-92FB-735E370DAE99}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
